@@ -69,7 +69,7 @@ function LeftBar() {
                                     <ul className="collapse nav flex-column ms-1" id="Cadastros" data-bs-parent="#menu">
                                         <hr />
                                         <li>
-                                            <a href="#" className="nav-link px-0 text-white"> Categorias </a>
+                                            <a href="/carregar/categorias/lista" className="nav-link px-0 text-white"> Categorias </a>
                                         </li>
                                         <hr />
                                         <li>
