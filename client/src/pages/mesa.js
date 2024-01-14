@@ -10,8 +10,8 @@ function Mesa() {
                             <div className="carousel-inner h-100">
                                 <div className="h-100 carousel-item bg-secondary active p-2" data-bs-interval="5000">
                                     <div className="p-1 text-center bg-white h-100">
-                                        <label><i>Precisa de algo ?</i></label>
-                                        <label><i>Chame um de nossos gaçons!</i></label>
+                                        <p>Precisa de algo ?</p>
+                                        <p>Chame um de nossos gaçons!</p>
 
                                         <button type="button" className="btn btn-secondary btn-sm w-75 mt-3 p-1">
                                             <span className="iconify" data-icon="ant-design:alert-filled"></span>
@@ -21,7 +21,7 @@ function Mesa() {
                                 </div>
                                 <div className="h-100 carousel-item bg-secondary p-2" data-bs-interval="5000">
                                     <div className="p-1 text-center bg-white h-100">
-                                        <label><i>Total da Mesa</i></label>
+                                        <p>Total da Mesa</p>
 
                                         <button type="button" className="btn btn-secondary btn-sm w-75 mt-3 p-1">
                                             <span className="iconify" data-icon="grommet-icons:money"></span>
@@ -31,7 +31,7 @@ function Mesa() {
                                 </div>
                                 <div className="h-100 carousel-item bg-secondary p-2" data-bs-interval="5000">
                                     <div className="p-1 text-center bg-white h-100">
-                                        <label><i>Detalhes dos pedidos</i></label>
+                                        <p>Detalhes dos pedidos</p>
 
                                         <button type="button" className="btn btn-secondary btn-sm w-75 mt-3 p-1">
                                             <span className="iconify" data-icon="lets-icons:order"></span>
