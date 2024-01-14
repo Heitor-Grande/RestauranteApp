@@ -42,11 +42,7 @@ function LeftBar() {
                             <ul className="collapse nav flex-column ms-1 bg-secondary p-1" id="cardapio" data-bs-parent="#menu">
                                 <hr />
                                 <li className="w-100">
-                                    <a href="#" className="nav-link px-0 text-white"> Bebida </a>
-                                </li>
-                                <hr />
-                                <li>
-                                    <a href="#" className="nav-link px-0 text-white"> Lanche </a>
+                                    <a href="/listar/produtos/categoria/bebida" className="nav-link px-0 text-white"> Lanche </a>
                                 </li>
                             </ul>
                         </li>
@@ -76,6 +72,9 @@ function LeftBar() {
                                             <a href="#" className="nav-link px-0 text-white"> Categorias </a>
                                         </li>
                                         <hr />
+                                        <li>
+                                            <a href="#" className="nav-link px-0 text-white"> Produtos </a>
+                                        </li>
                                     </ul>
                                 </li>
 
