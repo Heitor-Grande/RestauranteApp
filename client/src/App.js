@@ -1,18 +1,25 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import LeftBar from "./pages/leftBar";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom"
+import LeftBar from "./components/leftBar";
 import Mesa from "./pages/mesa";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
+    <>
+      <div className="container-fluid">
+        <div className="row flex-nowrap">
+          <BrowserRouter>
+            <Routes>
 
-        <Route path="/" element={<LeftBar />}>
-          <Route path="comanda/mesa" element={<Mesa />} />
-        </Route>
+              <Route path="/" element={<><LeftBar /><Outlet/></>}>
+                <Route path="comanda/mesa" element={<Mesa />} />
+              </Route>
 
-      </Routes>
-    </BrowserRouter>
+            </Routes>
+          </BrowserRouter>
+        </div>
+      </div>
+    </>
+
   )
 }
 
