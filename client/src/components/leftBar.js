@@ -87,22 +87,22 @@ function LeftBar() {
                                     <ul className="collapse nav flex-column ms-1 bg-secondary p-1" id="Pedidos" data-bs-parent="#menu">
                                         <hr />
                                         <li>
-                                            <a href="#" className="nav-link px-0 text-white"> Pendentes </a>
+                                            <a href="/visualizar/pedidos/pendentes" className="nav-link px-0 text-white"> Pendentes </a>
                                         </li>
                                         <hr />
                                         <li>
-                                            <a href="#" className="nav-link px-0 text-white"> Processando </a>
+                                            <a href="/visualizar/pedidos/processando" className="nav-link px-0 text-white"> Processando </a>
                                         </li>
                                         <hr />
                                         <li>
-                                            <a href="#" className="nav-link px-0 text-white"> Concluido </a>
+                                            <a href="/visualizar/pedidos/concluido" className="nav-link px-0 text-white"> Concluido </a>
                                         </li>
                                     </ul>
                                 </li>
 
                                 <hr />
                                 <li>
-                                    <a href="#Mesas" data-bs-toggle="collapse" className="nav-link px-0 align-middle text-white">
+                                    <a href="/visualizar/mesas" className="nav-link px-0 text-white">
                                         Mesas
                                     </a>
                                 </li>

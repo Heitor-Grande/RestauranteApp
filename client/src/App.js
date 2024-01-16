@@ -8,6 +8,12 @@ import PedirProduto from "./pages/pedirProduto";
 import ListaDeCategorias from "./pages/cadastros/categorias/listaDeCategorias";
 import EditarCategoria from "./pages/cadastros/categorias/editar";
 import CriarCategoria from "./pages/cadastros/categorias/criar";
+import ListagemPendentes from './pages/cadastros/pedidos/pendentes/listagemPendentes';
+import VisualizarPedidoPendente from './pages/cadastros/pedidos/pendentes/pedidoPendente/visualizar';
+import ListagemPedidosProcessando from './pages/cadastros/pedidos/processando/listagem';
+import ListagemPedidosConcluido from './pages/cadastros/pedidos/concluido/listagem';
+import ListagemMesas from './pages/cadastros/mesas/listagemMesas';
+import DetalhesMesa from './pages/cadastros/mesas/detalhesMesa';
 
 function App() {
   return (
@@ -36,6 +42,12 @@ function App() {
                 <Route path="carregar/categorias/lista" element={<ListaDeCategorias />} />
                 <Route path="formulario/categoria/criar" element={<CriarCategoria />} />
                 <Route path="formulario/categoria/editar/:id_categoria" element={<EditarCategoria />} />
+                <Route path="visualizar/pedidos/pendentes" element={<ListagemPendentes />} />
+                <Route path="visualizar/pedido/:id_pedido/:status" element={<VisualizarPedidoPendente />} />
+                <Route path="visualizar/pedidos/processando" element={<ListagemPedidosProcessando />} />
+                <Route path="visualizar/pedidos/concluido" element={<ListagemPedidosConcluido />} />
+                <Route path="visualizar/mesas" element={<ListagemMesas />} />
+                <Route path="visualizar/detalhes/mesa/:id_mesa" element={<DetalhesMesa />} />
               </Route>
 
             </Routes>
