@@ -14,6 +14,9 @@ import ListagemPedidosProcessando from './pages/cadastros/pedidos/processando/li
 import ListagemPedidosConcluido from './pages/cadastros/pedidos/concluido/listagem';
 import ListagemMesas from './pages/cadastros/mesas/listagemMesas';
 import DetalhesMesa from './pages/cadastros/mesas/detalhesMesa';
+import CriarToken from './pages/criarToken';
+import CriarTokenCasa from './pages/criarTokenCasa';
+import TokenInvalido from './pages/tokenInvalido';
 
 function App() {
   return (
@@ -49,6 +52,10 @@ function App() {
                 <Route path="visualizar/mesas" element={<ListagemMesas />} />
                 <Route path="visualizar/detalhes/mesa/:id_mesa" element={<DetalhesMesa />} />
               </Route>
+
+              <Route path="entrar/criar/token/cliente" element={<CriarToken />} />
+              <Route path="entrar/criar/token/casa" element={<CriarTokenCasa />} />
+              <Route path="ler/novamente/qr/code" element={<TokenInvalido />} />
 
             </Routes>
           </BrowserRouter>

@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from 'react-toastify'
-
+import axios from "axios"
 
 function FormularioCategoria(params) {
 
@@ -11,13 +11,78 @@ function FormularioCategoria(params) {
     const [ativo, set_ativo] = useState(true)
 
     function InsertCategoria(e) {
+
         e.preventDefault()
-        toast.success("Categoria criada com sucesso.")
+
+        const dados = {
+            categoria: Categoria,
+            ativo: ativo
+        }
+
+        axios.post(`${process.env.REACT_APP_API}/criar/categoria/${localStorage.getItem("tokenCasa")}`, dados).then(function (resposta) {
+
+            if (resposta.data.codigo != 200) {
+                toast.error(resposta.data.message)
+            }
+            else {
+                toast.success(resposta.data.message)
+                navigate(-1)
+            }
+        }).catch(function (erro) {
+
+            toast.error(erro)
+        })
     }
 
-    function UpdateCategoria() {
+    
+    function selectCategoriaPorID() {
 
+        axios.get(`${process.env.REACT_APP_API}/categoriaid/categorias/${localStorage.getItem("tokenCasa")}/${params.id_categoria}`)
+            .then(function(resposta){
+
+                if(resposta.data.codigo != 200){
+                    toast.error(resposta.data.message)
+                }
+                else{
+                    set_Categoria(resposta.data.categoria[0].categoria)
+                    set_ativo(resposta.data.categoria[0].ativo)
+                }
+            }).catch(function(erro){
+
+                toast.error(erro)
+            })
     }
+
+    function UpdateCategoria(e) {
+        e.preventDefault()
+
+        const dados = {
+            categoria: Categoria,
+            ativo: ativo,
+            id_categoria: params.id_categoria
+        }
+
+        axios.put(`${process.env.REACT_APP_API}/editar/categoria/${localStorage.getItem("tokenCasa")}`, dados).then(function (resposta) {
+
+            if (resposta.data.codigo != 200) {
+                toast.error(resposta.data.message)
+            }
+            else {
+                toast.success(resposta.data.message)
+                navigate(-1)
+            }
+        }).catch(function (erro) {
+
+            toast.error(erro)
+        })
+    }
+
+    useEffect(function(){
+
+        if(params.id_categoria != "novo"){
+            selectCategoriaPorID()
+        }
+    }, [])
 
     return (
         <>
@@ -37,23 +102,21 @@ function FormularioCategoria(params) {
                         <div>
                             <input type="text" disabled className="text-center d-inline form-control w-25" value={params.id_categoria} placeholder="ID categoria" required />
 
-                            <input type="text" required className="text-center d-inline form-control w-75" value={Categoria} onChange={function(e){
+                            <input type="text" required className="text-center d-inline form-control w-75" value={Categoria} onChange={function (e) {
                                 set_Categoria(e.target.value)
                             }} placeholder="Categoria" />
                         </div>
                         <br />
-                        <div class="form-check form-switch">
-                            <label class="form-check-label" for="flexSwitchCheckChecked">Ativo</label>
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked={ativo} onChange={function(e){
+                        <div className="form-check form-switch">
+                            <label className="form-check-label">Ativo</label>
+                            <input className="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked={ativo} onChange={function (e) {
                                 set_ativo(e.target.checked)
                             }} />
                         </div>
                     </div>
 
                     <br />
-                    <div className="salvarBtn">
-                        <button type="submit" className="btn btn-secondary w-75 d-block m-auto">Salvar</button>
-                    </div>
+                    <button type="submit" className="btn btn-secondary w-75 d-block m-auto">Salvar</button>
                 </form>
 
 

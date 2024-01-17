@@ -1,7 +1,36 @@
-import { Link } from "react-router-dom"
+import axios from "axios"
+import { useEffect, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 function LeftBar() {
 
+    const navigate = useNavigate()
+
+    const [Permissao, setPermissao] = useState("")
+
+    function ValidarJWT() {
+
+        axios.get(`${process.env.REACT_APP_API}/validar/token/${localStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa") || "123"}`)
+            .then(function (resposta) {
+                if (resposta.data.codigo != 200) {
+
+                    toast.error(resposta.data.message)
+                    navigate("/ler/novamente/qr/code")
+                }
+                else if (resposta.data.codigo == 200) {
+
+                    setPermissao(resposta.data.infoToken)
+                }
+            }).catch(function (erro) {
+
+                toast.error(erro)
+            })
+    }
+
+    useEffect(function () {
+        ValidarJWT()
+    }, [])
 
     return (
         <>
@@ -51,7 +80,8 @@ function LeftBar() {
                         <br />
                         <br />
 
-                        <li className="w-100">
+
+                        {Permissao == "newLoginCasa" ? <li className="w-100">
                             <hr />
                             <a href="#configuraCasa" data-bs-toggle="collapse" className="nav-link px-0 align-middle ">
                                 <span className="iconify text-white" data-icon="dashicons:admin-tools"></span>
@@ -107,7 +137,8 @@ function LeftBar() {
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> : ''}
+
                     </ul>
 
                     <br />
