@@ -103,7 +103,7 @@ function LeftBar() {
                                         </li>
                                         <hr />
                                         <li>
-                                            <a href="#" className="nav-link px-0 text-white"> Produtos </a>
+                                            <a href="/carregar/produtos/lista" className="nav-link px-0 text-white"> Produtos </a>
                                         </li>
                                     </ul>
                                 </li>

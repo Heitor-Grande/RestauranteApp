@@ -20,10 +20,10 @@ function ListagemProdutos() {
                 <br />
 
                 <div className="card">
-                    <img src="https://conteudo.imguol.com.br/c/entretenimento/ee/2022/04/28/hamburguer-sanduiche-lanche-1651166602338_v2_4x3.jpg" className="card-img-top" alt="..." />
+                    <img src="https://conteudo.imguol.com.br/c/entretenimento/ee/2022/04/28/hamburguer-sanduiche-lanche-1651166602338_v2_4x3.jpg" className="img-thumbnail" alt="..." />
                     <div className="card-body">
                         <h5 className="card-title">Lanche Qualquer cosia</h5>
-                        <p className="card-text">Uma descrição do produto direta e clara sobre o Lanche Qualquer coisa.</p>
+                        <p className="card-text">Uma descrição do produto direta e clara sobre o Lanche Qualquer coisa e seus igredientes de destaque</p>
                         <a href="/carregar/produto/1" className="btn btn-secondary m-auto d-block" data-toggle="modal" data-target="#exampleModal"><span className="iconify" data-icon="ph:plus-square-bold"></span></a>
                     </div>
                 </div>

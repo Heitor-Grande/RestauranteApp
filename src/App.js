@@ -17,6 +17,8 @@ import DetalhesMesa from './pages/cadastros/mesas/detalhesMesa';
 import CriarToken from './pages/criarToken';
 import CriarTokenCasa from './pages/criarTokenCasa';
 import TokenInvalido from './pages/tokenInvalido';
+import ListagemDeProdutos from './pages/cadastros/produtos/listagemDeProdutos';
+import FormularioProduto from './pages/cadastros/produtos/formulario';
 
 function App() {
   return (
@@ -50,6 +52,8 @@ function App() {
                 <Route path="visualizar/pedidos/concluido" element={<ListagemPedidosConcluido />} />
                 <Route path="visualizar/mesas" element={<ListagemMesas />} />
                 <Route path="visualizar/detalhes/mesa/:id_mesa" element={<DetalhesMesa />} />
+                <Route path="carregar/produtos/lista" element={<ListagemDeProdutos />} />
+                <Route path="formulario/produto/:id_produto" element={<FormularioProduto />} />
               </Route>
 
               <Route path="entrar/criar/token/cliente" element={<CriarToken />} />

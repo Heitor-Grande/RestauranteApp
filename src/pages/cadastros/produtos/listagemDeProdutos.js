@@ -9,25 +9,26 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { FaQuestion } from "react-icons/fa"
 
-function ListaDeCategorias() {
+function ListagemDeProdutos() {
 
     const navigate = useNavigate()
 
     const [show, setShow] = useState(false)
 
-    const [listaCategorias, set_listaCategorias] = useState([])
-    function ListarCategoriasAll() {
-        axios.get(`${process.env.REACT_APP_API}/all/categorias/${localStorage.getItem("tokenCasa")}`)
+    const [listaprodutos, set_listaprodutos] = useState([])
+    function ListarprodutosAll() {
+
+        axios.get(`${process.env.REACT_APP_API}/all/produtos/${localStorage.getItem("tokenCasa")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
 
-                    toast.error(resposta.data.codigo)
+                    toast.error(resposta.data.message)
                 }
                 else {
 
-                    set_listaCategorias(resposta.data.categorias)
-                    set_categoriaListaFormatada(resposta.data.categorias)
+                    set_listaprodutos(resposta.data.produtos)
+                    set_produtoListaFormatada(resposta.data.produtos)
                 }
 
             }).catch(function (erro) {
@@ -37,9 +38,9 @@ function ListaDeCategorias() {
     }
 
     const [idDeletar, setIdDeletar] = useState("")
-    function deletarCategoria() {
+    function deletarproduto() {
 
-        axios.delete(`${process.env.REACT_APP_API}/del/categoria/${localStorage.getItem("tokenCasa")}/${idDeletar}`)
+        axios.delete(`${process.env.REACT_APP_API}/del/produto/${localStorage.getItem("tokenCasa")}/${idDeletar}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
@@ -49,7 +50,7 @@ function ListaDeCategorias() {
                 else {
 
                     toast.success(resposta.data.message)
-                    ListarCategoriasAll()
+                    ListarprodutosAll()
                     setShow(false)
                 }
             }).catch(function (erro) {
@@ -60,29 +61,29 @@ function ListaDeCategorias() {
 
     //PESQUISA
     const [busca, set_busca] = useState("")
-    const [categoriasListaFormatada, set_categoriaListaFormatada] = useState([])
+    const [produtoListaFormatada, set_produtoListaFormatada] = useState([])
     function search(string) {
 
         set_busca(string)
 
         if (string == "") {
 
-            ListarCategoriasAll()
+            ListarprodutosAll()
             set_paginaAtual(1)
         }
         else {
 
             const search_formatada = string.toLowerCase()
 
-            const encontrados = listaCategorias.filter(function (categoria) {
+            const encontrados = listaprodutos.filter(function (produtos) {
 
-                const categoria_formatada = categoria.categoria.toLowerCase()
+                const produtos_formatado = produtos.produtos.toLowerCase()
 
-                return categoria_formatada.includes(search_formatada)
+                return produtos_formatado.includes(search_formatada)
             })
 
-            set_categoriaListaFormatada(encontrados)
-            set_ultimaPagina(Math.round(categoriasListaFormatada.length / 10))
+            set_produtoListaFormatada(encontrados)
+            set_ultimaPagina(Math.round(produtoListaFormatada.length / 10))
         }
     }
 
@@ -99,51 +100,52 @@ function ListaDeCategorias() {
         const indice_inicial = (pgAtual - 1) * itens_por_pagina
         const indice_final = indice_inicial + itens_por_pagina
 
-        const categorias_da_pagina = busca == "" ? listaCategorias.slice(indice_inicial, indice_final) : categoriasListaFormatada.slice(indice_inicial, indice_final)
+        const produtos_da_pagina = busca == "" ? listaprodutos.slice(indice_inicial, indice_final) : produtoListaFormatada.slice(indice_inicial, indice_final)
 
-        if (categorias_da_pagina.length == 0 && pgAtual != 1) {
+
+        if (produtos_da_pagina.length == 0 && pgAtual != 1) {
 
             toast.error("Fim da lista.")
         }
         else {
 
-            set_categoriaListaFormatada(categorias_da_pagina)
+            set_produtoListaFormatada(produtos_da_pagina)
         }
 
         //CALCULANDO A ULTIMA PAGINA
         if (busca == "") {
 
-            set_ultimaPagina(Math.round(listaCategorias.length / 10))
+            set_ultimaPagina(Math.round(listaprodutos.length / 10))
         }
         else {
 
-            set_ultimaPagina(Math.round(categoriasListaFormatada.length / 10))
+            set_ultimaPagina(Math.round(produtoListaFormatada.length / 10))
         }
 
     }
 
     useEffect(function () {
 
+        ListarprodutosAll()
         set_paginaAtual(1)
-        ListarCategoriasAll()
     }, [])
 
     useEffect(function () {
 
         paginacao(1)
-    }, [listaCategorias])
+    }, [listaprodutos])
 
     return (
         <>
             <div className="col py-3">
                 <button className="btn btn-secondary d-block" onClick={function () {
-                    navigate("/formulario/categoria/criar")
-                }}>Categorias <FaPlus /></button>
+                    navigate("/formulario/produto/novo")
+                }}>Produtos <FaPlus /></button>
 
                 <br />
 
                 <form className="form-inline d-flex">
-                    <input className="form-control mr-sm-2 m-1" type="search" placeholder="Buscar por categoria" aria-label="Search"
+                    <input className="form-control mr-sm-2 m-1" type="search" placeholder="Buscar por nome" aria-label="Search"
                         value={busca}
                         onChange={function (e) {
 
@@ -157,27 +159,25 @@ function ListaDeCategorias() {
 
                 <div className="container">
                     <div className="row">
-
-                        <div className="col bg-secondary text-white text-center">Categoria</div>
+                        <div className="col bg-secondary text-white text-center">Nome</div>
                         <div className="col-1 bg-secondary text-white p-0 text-center">St</div>
                         <div className="col-3 bg-secondary text-white text-center">Ações</div>
 
-                        {categoriasListaFormatada.map(function (categoria) {
+                        {produtoListaFormatada.map(function (produto) {
 
                             return (
                                 <>
                                     <div className="w-100"></div>
-
-                                    <div className="col border-bottom">{categoria.categoria}</div>
-                                    <div className={categoria.ativo == true ? "col-1 border-bottom bg-success text-center p-0" : "col-1 border-bottom bg-danger text-center p-0"}>{categoria.ativo == true ? "" : ""}</div>
+                                    <div className="col border-bottom">{produto.nome}</div>
+                                    <div className={produto.status == true ? "col-1 border-bottom bg-success text-center p-0" : "col-1 border-bottom bg-danger text-center p-0"}>{produto.status == true ? "" : ""}</div>
                                     <div className="col-3 border-bottom">
                                         <MdDeleteForever onClick={function () {
-                                            setIdDeletar(categoria.id_categoria)
+                                            setIdDeletar(produto.id_produto)
                                             setShow(true)
                                         }} />
 
                                         <FaEdit onClick={function () {
-                                            navigate(`/formulario/categoria/editar/${categoria.id_categoria}`)
+                                            navigate(`/formulario/produto/${produto.id_produto}`)
                                         }} />
                                     </div>
                                 </>
@@ -229,7 +229,7 @@ function ListaDeCategorias() {
                 </Modal.Header>
                 <Modal.Body>
                     <p className="text-center"><FaQuestion size={50} /></p>
-                    <p className="text-center">Confirmar exclusão da categoria ?</p>
+                    <p className="text-center">Confirmar exclusão do produto ?</p>
                 </Modal.Body>
                 <Modal.Footer>
 
@@ -240,7 +240,7 @@ function ListaDeCategorias() {
                     </Button>
                     <Button size="sm" variant="secondary" onClick={function () {
 
-                        deletarCategoria()
+                        deletarproduto()
 
                     }}>
                         Confirmar
@@ -253,4 +253,4 @@ function ListaDeCategorias() {
     )
 }
 
-export default ListaDeCategorias
+export default ListagemDeProdutos
