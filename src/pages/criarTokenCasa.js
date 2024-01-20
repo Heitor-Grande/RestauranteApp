@@ -9,9 +9,9 @@ function CriarTokenCasa() {
     const navigate = useNavigate()
 
     function BuscarToken() {
-        alert(2)
+
         axios.get(`${process.env.REACT_APP_API}/criar/jwt/casa`).then(function (resposta) {
-            alert(3)
+
             if (resposta.data.codigo == 400) {
                 toast.error(resposta.data.message)
             }
@@ -27,7 +27,7 @@ function CriarTokenCasa() {
     }
 
     useEffect(function () {
-        alert("1")
+        
         BuscarToken()
     }, [])
 
