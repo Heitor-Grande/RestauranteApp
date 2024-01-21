@@ -16,6 +16,7 @@ function FormularioProduto() {
     const [descricao, set_descricao] = useState("")
     const [img, set_img] = useState("")
     const [status, set_status] = useState(true)
+    const [id_categoria, set_id_categoria] = useState("")
 
     function InsertProduto(e) {
 
@@ -26,15 +27,19 @@ function FormularioProduto() {
             status: status,
             preco: preco,
             descricao: descricao,
-            img: img
+            img: img,
+            id_categoria: id_categoria
         }
+
 
         axios.post(`${process.env.REACT_APP_API}/criar/produto/${localStorage.getItem("tokenCasa")}`, dados).then(function (resposta) {
 
             if (resposta.data.codigo != 200) {
+
                 toast.error(resposta.data.message)
             }
             else {
+
                 toast.success(resposta.data.message)
                 navigate(-1)
             }
@@ -44,8 +49,36 @@ function FormularioProduto() {
         })
     }
 
-    function UpdateProduto() {
+    function UpdateProduto(e) {
 
+        e.preventDefault()
+
+        const dados = {
+            id_produto: id,
+            nome: nome,
+            status: status,
+            preco: preco,
+            descricao: descricao,
+            img: img,
+            id_categoria: id_categoria
+        }
+
+
+        axios.put(`${process.env.REACT_APP_API}/editar/produto/${localStorage.getItem("tokenCasa")}`, dados).then(function (resposta) {
+
+            if (resposta.data.codigo != 200) {
+
+                toast.error(resposta.data.message)
+            }
+            else {
+
+                toast.success(resposta.data.message)
+                navigate(-1)
+            }
+        }).catch(function (erro) {
+
+            toast.error(erro)
+        })
     }
 
     function abrirInputFile() {
@@ -53,10 +86,64 @@ function FormularioProduto() {
         document.getElementById('fileInput').click()
     }
 
-    useEffect(function () {
+    const [listaCategorias, set_listaCategorias] = useState([])
+    function carregarCategorias() {
 
+        axios.get(`${process.env.REACT_APP_API}/all/categorias/${localStorage.getItem("tokenCasa")}`)
+            .then(function (resposta) {
+
+                if (resposta.data.codigo != 200) {
+
+                    toast.error(resposta.data.codigo)
+                }
+                else {
+
+                    set_listaCategorias(resposta.data.categorias)
+                }
+
+            }).catch(function (erro) {
+
+                toast.error(erro)
+            })
+    }
+
+    function selectprodutoPorID() {
+
+        axios.get(`${process.env.REACT_APP_API}/produtoid/produtos/${localStorage.getItem("tokenCasa")}/${id}`)
+            .then(function (resposta) {
+
+                if (resposta.data.codigo != 200) {
+
+                    toast.error(resposta.data.message)
+                }
+                else {
+
+                    set_nome(resposta.data.produto[0].nome)
+                    set_status(resposta.data.produto[0].status)
+                    set_preco(resposta.data.produto[0].preco)
+                    set_descricao(resposta.data.produto[0].descricao)
+                    set_img(resposta.data.produto[0].img)
+                    set_id_categoria(resposta.data.produto[0].id_categoria)
+                }
+            }).catch(function (erro) {
+
+                toast.error(erro)
+            })
+    }
+
+    useEffect(function () {
+        
+        carregarCategorias()
         set_id(params.id_produto)
     }, [])
+
+    useEffect(function () {
+
+        if(params.id_produto != "novo"){
+
+            selectprodutoPorID() 
+        }
+    }, [id])
 
 
     return (
@@ -85,7 +172,7 @@ function FormularioProduto() {
                                     <div className="w-100"></div>
                                     <br />
                                     <div className="col text-center">
-                                        <img src={img} alt="..." className="img-thumbnail"/>
+                                        <img src={img} alt="..." className="img-thumbnail" />
                                     </div>
                                     <div className="w-100"></div>
                                     <br />
@@ -125,6 +212,27 @@ function FormularioProduto() {
 
                                             set_preco(e.target.value)
                                         }} placeholder="Preço R$" />
+                                    </div>
+                                    <div className="w-100"></div>
+                                    <br />
+                                    <div className="col text-center">
+
+                                        <label className="">Categoria</label>
+                                        <select className="form-select" value={id_categoria} required
+                                            onChange={function (e) {
+
+                                                set_id_categoria(e.target.value)
+                                            }}>
+                                            <option value=""></option>
+                                            {listaCategorias.map(function (categoria) {
+
+                                                return (
+                                                    <>
+                                                        <option value={categoria.id_categoria}>{categoria.categoria}</option>
+                                                    </>
+                                                )
+                                            })}
+                                        </select>
                                     </div>
                                     <div className="w-100"></div>
                                     <br />

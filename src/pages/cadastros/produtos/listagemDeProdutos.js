@@ -205,7 +205,7 @@ function ListagemDeProdutos() {
                                 }
                             }}>Voltar</a>
                         </li>
-                        <li className="page-item"><a className="page-link text-dark">{paginaAtual} de {ultimaPagina}</a></li>
+                        <li className="page-item"><a className="page-link text-dark">{paginaAtual} de {ultimaPagina == 0 ? "1" : ultimaPagina}</a></li>
                         <li className="page-item">
                             <a className="page-link text-dark" onClick={function () {
 
