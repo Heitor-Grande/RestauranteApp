@@ -25,7 +25,7 @@ function FormularioProduto() {
         const dados = {
             nome: nome,
             status: status,
-            preco: preco,
+            preco: preco.replace(/,/g, '.'),
             descricao: descricao,
             img: img,
             id_categoria: id_categoria
