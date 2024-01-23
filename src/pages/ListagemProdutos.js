@@ -131,7 +131,7 @@ function ListagemProdutos() {
                                     <textarea name="" className="form-control d-block" required value={produto.descricao} disabled id="" cols="30" rows="5"
                                         placeholder="Breve Descrição do produto" maxLength={100}></textarea>
                                     <br />
-                                    <h5 className="text-center">R${produto.preco.toString().replace(/\./g, ',')}</h5>
+                                    <h5 className="text-center">R${produto.preco.toString().split(".")[1].length == 1 ? produto.preco.toString().replace(/\./g, ',') + "0" : produto.preco.toString().replace(/\./g, ',')}</h5>
                                     <a href={`/carregar/produto/${produto.id_produto}`} className="btn btn-secondary m-auto d-block" data-toggle="modal" data-target="#exampleModal"><span className="iconify" data-icon="ph:plus-square-bold"></span></a>
                                 </div>
                             </div>

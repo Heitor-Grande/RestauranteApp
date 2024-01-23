@@ -120,7 +120,7 @@ function FormularioProduto() {
 
                     set_nome(resposta.data.produto[0].nome)
                     set_status(resposta.data.produto[0].status)
-                    set_preco(resposta.data.produto[0].preco)
+                    set_preco(resposta.data.produto[0].preco.toString().split(".")[1].length == 1 ? resposta.data.produto[0].preco + "0" : resposta.data.produto[0].preco)
                     set_descricao(resposta.data.produto[0].descricao)
                     set_img(resposta.data.produto[0].img)
                     set_id_categoria(resposta.data.produto[0].id_categoria)
