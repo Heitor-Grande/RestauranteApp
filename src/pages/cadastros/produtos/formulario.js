@@ -237,10 +237,10 @@ function FormularioProduto() {
                                     <div className="w-100"></div>
                                     <br />
                                     <div className="col">
-                                        <textarea name="" className="form-control text-center" required value={descricao} onChange={function (e) {
+                                        <textarea name="" className="form-control" required value={descricao} onChange={function (e) {
                                             set_descricao(e.target.value)
                                         }} id="" cols="30" rows="5"
-                                            placeholder="Breve Descrição do produto" maxLength={100}></textarea>
+                                            placeholder="Breve Descrição do produto"></textarea>
                                     </div>
                                     <div className="w-100"></div>
                                     <br />

@@ -28,8 +28,31 @@ function LeftBar() {
             })
     }
 
+
+    const [categorias, set_categorias] = useState([])
+    function carregarCategorias() {
+
+        axios.get(`${process.env.REACT_APP_API}/all/categorias/ativas/${localStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa")}`)
+            .then(function (resposta) {
+
+                if (resposta.data.codigo != 200) {
+
+                    toast.error(resposta.data.codigo)
+                }
+                else {
+
+                    set_categorias(resposta.data.categorias)
+                }
+
+            }).catch(function (erro) {
+
+                toast.error(erro)
+            })
+    }
+
     useEffect(function () {
         ValidarJWT()
+        carregarCategorias()
     }, [])
 
     return (
@@ -69,10 +92,17 @@ function LeftBar() {
                                 <span className="ms-1 d-none d-sm-inline text-white">Menu</span>
                             </a>
                             <ul className="collapse nav flex-column ms-1 bg-secondary p-1" id="cardapio" data-bs-parent="#menu">
-                                <hr />
-                                <li className="w-100">
-                                    <a href="/listar/produtos/categoria/bebida" className="nav-link px-0 text-white"> Lanche </a>
-                                </li>
+                                {categorias.map(function (categoria) {
+
+                                    return (
+                                        <>
+                                            <hr />
+                                            <li className="w-100">
+                                                <a href={`/listar/produtos/categoria/${categoria.id_categoria}`} className="nav-link px-0 text-white"> {categoria.categoria} </a>
+                                            </li>
+                                        </>
+                                    )
+                                })}
                             </ul>
                         </li>
 
