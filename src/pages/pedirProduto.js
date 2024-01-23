@@ -1,8 +1,11 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FaQuestion } from "react-icons/fa"
+import axios from "axios";
+import { toast } from 'react-toastify'
+
 
 function PedirProduto() {
 
@@ -17,10 +20,36 @@ function PedirProduto() {
     const [nomeCliente, set_nomeCliente] = useState("")
 
 
+    const [produto, set_produto] = useState([])
+    function carregarProduto() {
+
+        axios.get(`${process.env.REACT_APP_API}/produtoid/produtos/${localStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa")}/${params.id_produto}`)
+            .then(function (resposta) {
+
+                if (resposta.data.codigo != 200) {
+
+                    toast.error(resposta.data.message)
+                }
+                else {
+
+                    set_produto(resposta.data.produto)
+                }
+            }).catch(function (erro) {
+
+                toast.error(erro)
+            })
+    }
+
     function addAoPedido(e) {
         e.preventDefault()
         setShow(true)
     }
+
+
+    useEffect(function () {
+
+        carregarProduto()
+    }, [])
 
     return (
         <>
@@ -35,34 +64,42 @@ function PedirProduto() {
 
                 <br />
 
-                <form onSubmit={function (e) {
-                    e.preventDefault()
-                    setShow(true)
-                }}>
-                    <div className="card">
-                        <img src="https://conteudo.imguol.com.br/c/entretenimento/ee/2022/04/28/hamburguer-sanduiche-lanche-1651166602338_v2_4x3.jpg" className="card-img-top" alt="..." />
-                        <div className="card-body">
-                            <h5 className="card-title">Lanche Qualquer cosia</h5>
-                            <p className="card-text">Uma descrição do produto direta e clara sobre o Lanche Qualquer coisa.</p>
-                            <br />
-                            <div className="controle">
-                                <input type="text" className="text-center form-control w-75 d-block m-auto" value={nomeCliente} placeholder="Nome do Cliente" required onChange={function(e){
-                                    set_nomeCliente(e.target.value)
-                                }} />
-                                <br />
-                                <input type="number" placeholder="Quantidade" className="text-center form-control w-50 d-block m-auto" required value={quantidadePedido} onChange={function (e) {
-                                    set_quantidadePedido(e.target.value)
-                                }} />
-                                <br />
+                {produto.map(function (produto) {
 
-                                <span className="input-group-text">Obervações</span>
-                                <textarea className="form-control" aria-label="With textarea" placeholder="Escreva aqui suas obervações para o pedido"></textarea>
-                            </div>
-                            <br />
-                            <button type="submit" className="btn btn-secondary m-auto d-block w-100">Adicionar ao Pedido</button>
-                        </div>
-                    </div>
-                </form>
+                    return (
+                        <>
+                            <form onSubmit={function (e) {
+                                e.preventDefault()
+                                setShow(true)
+                            }}>
+                                <div className="card">
+                                    <img src={produto.img} className="card-img-top" alt="..." />
+                                    <div className="card-body">
+                                        <h5 className="card-title text-center">{produto.nome}</h5>
+                                        <textarea name="" className="form-control d-block" required value={produto.descricao} disabled id="" cols="30" rows="5"
+                                            placeholder="Breve Descrição do produto" maxLength={100}></textarea>
+                                        <br />
+                                        <div className="controle">
+                                            <input type="text" className="text-center form-control w-75 d-block m-auto" value={nomeCliente} placeholder="Nome do Cliente" required onChange={function (e) {
+                                                set_nomeCliente(e.target.value)
+                                            }} />
+                                            <br />
+                                            <input type="number" placeholder="Quantidade" className="text-center form-control w-50 d-block m-auto" required value={quantidadePedido} onChange={function (e) {
+                                                set_quantidadePedido(e.target.value)
+                                            }} />
+                                            <br />
+                                            <h5 className="text-center">R${produto.preco.toString().replace(/\./g, ',')}</h5>
+                                            <span className="input-group-text">Obervações</span>
+                                            <textarea className="form-control" aria-label="With textarea" placeholder="Escreva aqui suas obervações para o pedido"></textarea>
+                                        </div>
+                                        <br />
+                                        <button type="submit" className="btn btn-secondary m-auto d-block w-100">Adicionar ao Pedido</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </>
+                    )
+                })}
             </div>
 
 
