@@ -73,8 +73,10 @@ function PedirProduto() {
                                 setShow(true)
                             }}>
                                 <div className="card">
-                                    <img src={produto.img} className="card-img-top" alt="..." />
-                                    <div className="card-body">
+
+                                    <div className="card-body text-center">
+                                        <img src={produto.img} className="d-inline-block h-50 w-50" alt="..." />
+                                        <hr />
                                         <h5 className="card-title text-center">{produto.nome}</h5>
                                         <textarea name="" className="form-control d-block" required value={produto.descricao} disabled id="" cols="30" rows="5"
                                             placeholder="Breve Descrição do produto" maxLength={100}></textarea>
@@ -88,7 +90,7 @@ function PedirProduto() {
                                                 set_quantidadePedido(e.target.value)
                                             }} />
                                             <br />
-                                            <h5 className="text-center">R${produto.preco.toString().replace(/\./g, ',')}</h5>
+                                            <h5 className="text-center">R${produto.preco.toString().replace('.', ',')}</h5>
                                             <span className="input-group-text">Obervações</span>
                                             <textarea className="form-control" aria-label="With textarea" placeholder="Escreva aqui suas obervações para o pedido"></textarea>
                                         </div>

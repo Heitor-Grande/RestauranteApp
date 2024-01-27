@@ -11,27 +11,32 @@ import { FaQuestion } from "react-icons/fa"
 
 function ListaDeCategorias() {
 
+    const [carregando, set_carregando] = useState(true)
+
     const navigate = useNavigate()
 
     const [show, setShow] = useState(false)
 
     const [listaCategorias, set_listaCategorias] = useState([])
     function ListarCategoriasAll() {
+
+        set_carregando(false)
+
         axios.get(`${process.env.REACT_APP_API}/all/categorias/${localStorage.getItem("tokenCasa")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
-
+                    set_carregando(true)
                     toast.error(resposta.data.codigo)
                 }
                 else {
-
+                    set_carregando(true)
                     set_listaCategorias(resposta.data.categorias)
                     set_categoriaListaFormatada(resposta.data.categorias)
                 }
 
             }).catch(function (erro) {
-
+                set_carregando(true)
                 toast.error(erro)
             })
     }
@@ -39,21 +44,24 @@ function ListaDeCategorias() {
     const [idDeletar, setIdDeletar] = useState("")
     function deletarCategoria() {
 
+        set_carregando(false)
         axios.delete(`${process.env.REACT_APP_API}/del/categoria/${localStorage.getItem("tokenCasa")}/${idDeletar}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
 
+                    set_carregando(true)
                     toast.error(resposta.data.message)
                 }
                 else {
 
+                    set_carregando(true)
                     toast.success(resposta.data.message)
                     ListarCategoriasAll()
                     setShow(false)
                 }
             }).catch(function (erro) {
-
+                set_carregando(true)
                 toast.error(erro)
             })
     }
@@ -218,6 +226,11 @@ function ListaDeCategorias() {
                         </li>
                     </ul>
                 </nav>
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status" hidden={carregando}>
+
+                    </div>
+                </div>
             </div>
 
             {/**MODAL CONFIRMAR DELETE */}

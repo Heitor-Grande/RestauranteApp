@@ -13,26 +13,32 @@ function ListagemDeProdutos() {
 
     const navigate = useNavigate()
 
+    const [carregando, set_carregando] = useState(true)
+
     const [show, setShow] = useState(false)
 
     const [listaprodutos, set_listaprodutos] = useState([])
     function ListarprodutosAll() {
 
+        set_carregando(false)
         axios.get(`${process.env.REACT_APP_API}/all/produtos/${localStorage.getItem("tokenCasa")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
 
+                    set_carregando(true)
                     toast.error(resposta.data.message)
                 }
                 else {
 
+                    set_carregando(true)
                     set_listaprodutos(resposta.data.produtos)
                     set_produtoListaFormatada(resposta.data.produtos)
                 }
 
             }).catch(function (erro) {
 
+                set_carregando(true)
                 toast.error(erro)
             })
     }
@@ -40,21 +46,24 @@ function ListagemDeProdutos() {
     const [idDeletar, setIdDeletar] = useState("")
     function deletarproduto() {
 
+        set_carregando(false)
+
         axios.delete(`${process.env.REACT_APP_API}/del/produto/${localStorage.getItem("tokenCasa")}/${idDeletar}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
 
+                    set_carregando(true)
                     toast.error(resposta.data.message)
                 }
                 else {
-
+                    set_carregando(true)
                     toast.success(resposta.data.message)
                     ListarprodutosAll()
                     setShow(false)
                 }
             }).catch(function (erro) {
-
+                set_carregando(true)
                 toast.error(erro)
             })
     }
@@ -218,6 +227,11 @@ function ListagemDeProdutos() {
                         </li>
                     </ul>
                 </nav>
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status" hidden={carregando}>
+
+                    </div>
+                </div>
             </div>
 
             {/**MODAL CONFIRMAR DELETE */}

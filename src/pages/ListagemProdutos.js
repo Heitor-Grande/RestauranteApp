@@ -1,11 +1,12 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
-
+import { MdOutlineReadMore } from "react-icons/md"
 function ListagemProdutos() {
 
     const params = useParams()
+    const navigate = useNavigate()
 
     const [produtos, set_produtos] = useState([])
     function carregarProdutosDaCategoria() {
@@ -99,7 +100,7 @@ function ListagemProdutos() {
         carregarProdutosDaCategoria()
     }, [])
 
-    useEffect(function(){
+    useEffect(function () {
 
         paginacao(1)
     }, [produtos])
@@ -110,34 +111,51 @@ function ListagemProdutos() {
             <div className="col py-3">
                 <nav className="navbar navbar-light bg-light d-block">
                     <form className="form">
-                        <input className="form-control" type="search" value={busca} placeholder="Procure aqui ..." aria-label="Search" 
-                        onChange={function(e){
+                        <input className="form-control" type="search" value={busca} placeholder="Procure aqui ..." aria-label="Search"
+                            onChange={function (e) {
 
-                            search(e.target.value)
-                        }} />
+                                search(e.target.value)
+                            }} />
                     </form>
                 </nav>
+                <br />
 
-                {produtosListaFormatada.map(function (produto) {
+                <div className="produtosListados">
+                    <div className="container p-1">
+                        <div className="row">
+                            {produtosListaFormatada.map(function (produto) {
 
-                    return (
-                        <>
-                            <br />
-                            <div className="card">
-                                <div className="card-body">
-                                    <img src={produto.img} className="img-fluid d-block" />
-                                    <br />
-                                    <h5 className="card-title text-center">{produto.nome}</h5>
-                                    <textarea name="" className="form-control d-block" required value={produto.descricao} disabled id="" cols="30" rows="5"
-                                        placeholder="Breve Descrição do produto" maxLength={100}></textarea>
-                                    <br />
-                                    <h5 className="text-center">R${produto.preco.toString().split(".")[1].length == 1 ? produto.preco.toString().replace(/\./g, ',') + "0" : produto.preco.toString().replace(/\./g, ',')}</h5>
-                                    <a href={`/carregar/produto/${produto.id_produto}`} className="btn btn-secondary m-auto d-block" data-toggle="modal" data-target="#exampleModal"><span className="iconify" data-icon="ph:plus-square-bold"></span></a>
-                                </div>
-                            </div>
-                        </>
-                    )
-                })}
+                                return (
+                                    <>
+
+                                        <div className="card w-50 d-inline-block" onClick={function(){
+
+                                            navigate(`/carregar/produto/${produto.id_produto}`)
+                                        }}>
+
+                                            <div className="card-body text-center">
+                                                <img src={produto.img} className="d-inline-block h-50 w-75" />
+
+                                                <hr />
+                                                <div className="col">
+                                                    <p>{produto.nome}</p>
+
+                                                </div>
+                                                <div className="w-100 p-1"></div>
+                                                <div className="col">
+                                                    <h4>R${produto.preco.toString().replace('.', ',')}</h4>
+                                                </div>
+
+                                            </div>
+
+                                        </div >
+
+                                    </>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
 
                 <br />
                 <nav aria-label="Page navigation example">
@@ -170,7 +188,7 @@ function ListagemProdutos() {
                         </li>
                     </ul>
                 </nav>
-            </div>
+            </div >
         </>
     )
 }

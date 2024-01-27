@@ -21,6 +21,7 @@ function LeftBar() {
                 else if (resposta.data.codigo == 200) {
 
                     setPermissao(resposta.data.infoToken)
+                    carregarCategorias()
                 }
             }).catch(function (erro) {
 
@@ -37,7 +38,7 @@ function LeftBar() {
 
                 if (resposta.data.codigo != 200) {
 
-                    toast.error(resposta.data.codigo)
+                    toast.error(resposta.data.message)
                 }
                 else {
 
@@ -51,8 +52,8 @@ function LeftBar() {
     }
 
     useEffect(function () {
+        
         ValidarJWT()
-        carregarCategorias()
     }, [])
 
     return (

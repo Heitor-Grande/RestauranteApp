@@ -7,12 +7,16 @@ function FormularioCategoria(params) {
 
     const navigate = useNavigate()
 
+    const [carregando, set_carregando] = useState(true)
+
     const [Categoria, set_Categoria] = useState("")
     const [ativo, set_ativo] = useState(true)
 
     function InsertCategoria(e) {
 
         e.preventDefault()
+
+        set_carregando(false)
 
         const dados = {
             categoria: Categoria,
@@ -22,33 +26,40 @@ function FormularioCategoria(params) {
         axios.post(`${process.env.REACT_APP_API}/criar/categoria/${localStorage.getItem("tokenCasa")}`, dados).then(function (resposta) {
 
             if (resposta.data.codigo != 200) {
+
+                set_carregando(true)
                 toast.error(resposta.data.message)
             }
             else {
+                set_carregando(true)
                 toast.success(resposta.data.message)
                 navigate(-1)
             }
         }).catch(function (erro) {
-
+            set_carregando(true)
             toast.error(erro)
         })
     }
 
-    
+
     function selectCategoriaPorID() {
 
-        axios.get(`${process.env.REACT_APP_API}/categoriaid/categorias/${localStorage.getItem("tokenCasa")}/${params.id_categoria}`)
-            .then(function(resposta){
+        set_carregando(false)
 
-                if(resposta.data.codigo != 200){
+        axios.get(`${process.env.REACT_APP_API}/categoriaid/categorias/${localStorage.getItem("tokenCasa")}/${params.id_categoria}`)
+            .then(function (resposta) {
+
+                if (resposta.data.codigo != 200) {
+                    set_carregando(true)
                     toast.error(resposta.data.message)
                 }
-                else{
+                else {
+                    set_carregando(true)
                     set_Categoria(resposta.data.categoria[0].categoria)
                     set_ativo(resposta.data.categoria[0].ativo)
                 }
-            }).catch(function(erro){
-
+            }).catch(function (erro) {
+                set_carregando(true)
                 toast.error(erro)
             })
     }
@@ -62,24 +73,30 @@ function FormularioCategoria(params) {
             id_categoria: params.id_categoria
         }
 
+        set_carregando(false)
+
         axios.put(`${process.env.REACT_APP_API}/editar/categoria/${localStorage.getItem("tokenCasa")}`, dados).then(function (resposta) {
 
             if (resposta.data.codigo != 200) {
+
+                set_carregando(true)
                 toast.error(resposta.data.message)
             }
             else {
+
+                set_carregando(true)
                 toast.success(resposta.data.message)
                 navigate(-1)
             }
         }).catch(function (erro) {
-
+            set_carregando(true)
             toast.error(erro)
         })
     }
 
-    useEffect(function(){
+    useEffect(function () {
 
-        if(params.id_categoria != "novo"){
+        if (params.id_categoria != "novo") {
             selectCategoriaPorID()
         }
     }, [])
@@ -118,7 +135,11 @@ function FormularioCategoria(params) {
                     <br />
                     <button type="submit" className="btn btn-secondary w-75 d-block m-auto">Salvar</button>
                 </form>
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status" hidden={carregando}>
 
+                    </div>
+                </div>
 
             </div>
         </>

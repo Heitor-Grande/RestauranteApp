@@ -10,6 +10,8 @@ function FormularioProduto() {
     const params = useParams()
     const navigate = useNavigate()
 
+    const [carregando, set_carregando] = useState(true)
+
     const [id, set_id] = useState("")
     const [nome, set_nome] = useState("")
     const [preco, set_preco] = useState("")
@@ -19,6 +21,8 @@ function FormularioProduto() {
     const [id_categoria, set_id_categoria] = useState("")
 
     function InsertProduto(e) {
+
+        set_carregando(false)
 
         e.preventDefault()
 
@@ -35,16 +39,16 @@ function FormularioProduto() {
         axios.post(`${process.env.REACT_APP_API}/criar/produto/${localStorage.getItem("tokenCasa")}`, dados).then(function (resposta) {
 
             if (resposta.data.codigo != 200) {
-
+                set_carregando(true)
                 toast.error(resposta.data.message)
             }
             else {
-
+                set_carregando(true)
                 toast.success(resposta.data.message)
                 navigate(-1)
             }
         }).catch(function (erro) {
-
+            set_carregando(true)
             toast.error(erro)
         })
     }
@@ -52,6 +56,8 @@ function FormularioProduto() {
     function UpdateProduto(e) {
 
         e.preventDefault()
+
+        set_carregando(false)
 
         const dados = {
             id_produto: id,
@@ -68,15 +74,18 @@ function FormularioProduto() {
 
             if (resposta.data.codigo != 200) {
 
+                set_carregando(true)
                 toast.error(resposta.data.message)
             }
             else {
 
+                set_carregando(true)
                 toast.success(resposta.data.message)
                 navigate(-1)
             }
         }).catch(function (erro) {
 
+            set_carregando(true)
             toast.error(erro)
         })
     }
@@ -89,59 +98,69 @@ function FormularioProduto() {
     const [listaCategorias, set_listaCategorias] = useState([])
     function carregarCategorias() {
 
+        set_carregando(false)
+
         axios.get(`${process.env.REACT_APP_API}/all/categorias/${localStorage.getItem("tokenCasa")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
 
+                    set_carregando(true)
                     toast.error(resposta.data.codigo)
                 }
                 else {
 
+                    set_carregando(true)
                     set_listaCategorias(resposta.data.categorias)
                 }
 
             }).catch(function (erro) {
 
+                set_carregando(true)
                 toast.error(erro)
             })
     }
 
-    function selectprodutoPorID() {
+    function selectprodutoPorID(id_prod) {
 
-        axios.get(`${process.env.REACT_APP_API}/produtoid/produtos/${localStorage.getItem("tokenCasa")}/${id}`)
+        set_carregando(false)
+
+        axios.get(`${process.env.REACT_APP_API}/produtoid/produtos/${localStorage.getItem("tokenCasa")}/${id_prod}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
 
+                    set_carregando(true)
                     toast.error(resposta.data.message)
                 }
                 else {
 
+                    set_carregando(true)
                     set_nome(resposta.data.produto[0].nome)
                     set_status(resposta.data.produto[0].status)
-                    set_preco(resposta.data.produto[0].preco.toString().split(".")[1].length == 1 ? resposta.data.produto[0].preco + "0" : resposta.data.produto[0].preco)
+                    set_preco(resposta.data.produto[0].preco)
                     set_descricao(resposta.data.produto[0].descricao)
                     set_img(resposta.data.produto[0].img)
                     set_id_categoria(resposta.data.produto[0].id_categoria)
                 }
             }).catch(function (erro) {
 
+                set_carregando(true)
                 toast.error(erro)
             })
     }
 
     useEffect(function () {
-        
+
         carregarCategorias()
         set_id(params.id_produto)
     }, [])
 
     useEffect(function () {
 
-        if(params.id_produto != "novo"){
+        if (params.id_produto != "novo") {
 
-            selectprodutoPorID() 
+            selectprodutoPorID(params.id_produto)
         }
     }, [id])
 
@@ -172,58 +191,52 @@ function FormularioProduto() {
                                     <div className="w-100"></div>
                                     <br />
                                     <div className="col text-center">
-                                        <img src={img} alt="..." className="img-thumbnail" />
+                                        <img src={img} alt="..." className="img-thumbnail h-75 w-100 d-inline-block" />
+                                        <div className="w-100"></div>
+                                        <br />
+                                        <div>
+                                            <button type="button" className={img == "" ? "btn btn-danger" : "btn btn-success"} onClick={abrirInputFile}>Imagem</button>
+                                            <input type="file" id="fileInput" onChange={function (e) {
+                                                const file = e.target.files[0]
+
+                                                if (file) {
+                                                    const reader = new FileReader()
+
+                                                    reader.onloadend = () => {
+                                                        // O resultado é uma string base64
+                                                        const base64String = reader.result
+
+                                                        // Define a string base64 no estado usando setImg
+                                                        set_img(base64String)
+                                                    }
+
+                                                    // Lê o arquivo como uma string base64
+                                                    reader.readAsDataURL(file)
+                                                }
+                                            }} hidden />
+                                        </div>
                                     </div>
-                                    <div className="w-100"></div>
-                                    <br />
-                                    <div className="col text-center">
 
-                                        <button type="button" className={img == "" ? "btn btn-danger" : "btn btn-success"} onClick={abrirInputFile}>Imagem Ilustrativa</button>
-                                        <input type="file" id="fileInput" onChange={function (e) {
-                                            const file = e.target.files[0]
-
-                                            if (file) {
-                                                const reader = new FileReader()
-
-                                                reader.onloadend = () => {
-                                                    // O resultado é uma string base64
-                                                    const base64String = reader.result
-
-                                                    // Define a string base64 no estado usando setImg
-                                                    set_img(base64String)
-                                                };
-
-                                                // Lê o arquivo como uma string base64
-                                                reader.readAsDataURL(file)
-                                            }
-                                        }} hidden />
-                                    </div>
-                                    <div className="w-100"></div>
-                                    <br />
                                     <div className="col">
                                         <input type="text" required className="text-center d-inline form-control" value={nome} onChange={function (e) {
                                             set_nome(e.target.value)
                                         }} placeholder="Nome" maxLength={25} />
-                                    </div>
-                                    <div className="w-100"></div>
-                                    <br />
-                                    <div className="col text-center">
-                                        <input type="number" required className="text-center d-inline form-control w-75" value={preco} onChange={function (e) {
+
+                                        <div className="w-100 p-1"></div>
+
+                                        <input type="number" required className="text-center d-inline form-control" value={preco} onChange={function (e) {
 
                                             set_preco(e.target.value)
                                         }} placeholder="Preço R$" />
-                                    </div>
-                                    <div className="w-100"></div>
-                                    <br />
-                                    <div className="col text-center">
 
-                                        <label className="">Categoria</label>
+                                        <div className="w-100 p-1"></div>
+
                                         <select className="form-select" value={id_categoria} required
                                             onChange={function (e) {
 
                                                 set_id_categoria(e.target.value)
                                             }}>
-                                            <option value=""></option>
+                                            <option className="text-secondary" value="" disabled>Categoria</option>
                                             {listaCategorias.map(function (categoria) {
 
                                                 return (
@@ -233,17 +246,19 @@ function FormularioProduto() {
                                                 )
                                             })}
                                         </select>
-                                    </div>
-                                    <div className="w-100"></div>
-                                    <br />
-                                    <div className="col">
+
+                                        <div className="w-100 p-1"></div>
+
                                         <textarea name="" className="form-control" required value={descricao} onChange={function (e) {
                                             set_descricao(e.target.value)
                                         }} id="" cols="30" rows="5"
                                             placeholder="Breve Descrição do produto"></textarea>
+
+                                        <div className="w-100 p-1"></div>
+
+                                        <button type="submit" className="btn btn-secondary w-75 d-block m-auto">Salvar</button>
                                     </div>
-                                    <div className="w-100"></div>
-                                    <br />
+                                    
                                     <div className="col">
                                         <div className="form-check form-switch">
                                             <label className="form-check-label">Ativo</label>
@@ -257,11 +272,13 @@ function FormularioProduto() {
 
                         </div>
                     </div>
-
-                    <br />
-                    <button type="submit" className="btn btn-secondary w-75 d-block m-auto">Salvar</button>
                 </form>
 
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status" hidden={carregando}>
+
+                    </div>
+                </div>
 
             </div>
         </>
