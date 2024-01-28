@@ -13,6 +13,8 @@ function PedirProduto() {
     const params = useParams()
     const navigate = useNavigate()
 
+    const [carregando, set_carregando] = useState(true)
+
     //controle modal
     const [show, setShow] = useState(false)
 
@@ -24,19 +26,24 @@ function PedirProduto() {
     const [produto, set_produto] = useState([])
     function carregarProduto() {
 
+        set_carregando(false)
+
         axios.get(`${process.env.REACT_APP_API}/produtoid/produtos/${localStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa")}/${params.id_produto}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
 
+                    set_carregando(true)
                     toast.error(resposta.data.message)
                 }
                 else {
 
+                    set_carregando(true)
                     set_produto(resposta.data.produto)
                 }
             }).catch(function (erro) {
 
+                set_carregando(true)
                 toast.error(erro)
             })
     }
@@ -64,6 +71,12 @@ function PedirProduto() {
                 </button>
 
                 <br />
+
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status" hidden={carregando}>
+
+                    </div>
+                </div>
 
                 {produto.map(function (produto) {
 
@@ -109,7 +122,7 @@ function PedirProduto() {
                                     </div>
                                 </div>
                             </form>
-                            <BtnPedidos/>
+                            <BtnPedidos />
                         </>
                     )
                 })}
