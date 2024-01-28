@@ -163,6 +163,12 @@ function ListaDeCategorias() {
 
                 <br />
 
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status" hidden={carregando}>
+
+                    </div>
+                </div>
+
                 <div className="container">
                     <div className="row">
 
@@ -226,11 +232,6 @@ function ListaDeCategorias() {
                         </li>
                     </ul>
                 </nav>
-                <div class="d-flex justify-content-center">
-                    <div class="spinner-border" role="status" hidden={carregando}>
-
-                    </div>
-                </div>
             </div>
 
             {/**MODAL CONFIRMAR DELETE */}

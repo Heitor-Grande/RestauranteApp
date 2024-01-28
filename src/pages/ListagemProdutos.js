@@ -8,18 +8,23 @@ function ListagemProdutos() {
     const params = useParams()
     const navigate = useNavigate()
 
+    const [carregando, set_carregando] = useState(true)
+
     const [produtos, set_produtos] = useState([])
     function carregarProdutosDaCategoria() {
 
+        set_carregando(false)
         axios.get(`${process.env.REACT_APP_API}/carrega/produtos/by/categoria/${localStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa")}/${params.categoria}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
 
+                    // set_carregando(true)
                     toast.error(resposta.data.message)
                 }
                 else {
 
+                    //set_carregando(true)
                     set_produtos(resposta.data.produtos)
                     set_produtoListaFormatada(resposta.data.produtos)
                 }
@@ -119,7 +124,11 @@ function ListagemProdutos() {
                     </form>
                 </nav>
                 <br />
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status" hidden={carregando}>
 
+                    </div>
+                </div>
                 <div className="produtosListados">
                     <div className="container p-1">
                         <div className="row">
@@ -128,7 +137,7 @@ function ListagemProdutos() {
                                 return (
                                     <>
 
-                                        <div className="card w-50 d-inline-block" onClick={function(){
+                                        <div className="card w-50 d-inline-block" onClick={function () {
 
                                             navigate(`/carregar/produto/${produto.id_produto}`)
                                         }}>

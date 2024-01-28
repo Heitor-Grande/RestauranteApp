@@ -166,6 +166,12 @@ function ListagemDeProdutos() {
 
                 <br />
 
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status" hidden={carregando}>
+
+                    </div>
+                </div>
+
                 <div className="container">
                     <div className="row">
                         <div className="col bg-secondary text-white text-center">Nome</div>
@@ -227,11 +233,6 @@ function ListagemDeProdutos() {
                         </li>
                     </ul>
                 </nav>
-                <div class="d-flex justify-content-center">
-                    <div class="spinner-border" role="status" hidden={carregando}>
-
-                    </div>
-                </div>
             </div>
 
             {/**MODAL CONFIRMAR DELETE */}

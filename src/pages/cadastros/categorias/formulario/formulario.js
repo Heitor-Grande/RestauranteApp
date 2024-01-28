@@ -112,7 +112,11 @@ function FormularioCategoria(params) {
                 </button>
 
                 <br />
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status" hidden={carregando}>
 
+                    </div>
+                </div>
                 <form className="form-inline" onSubmit={params.id_categoria == "novo" ? InsertCategoria : UpdateCategoria}>
 
                     <div className="inputs">
@@ -135,12 +139,6 @@ function FormularioCategoria(params) {
                     <br />
                     <button type="submit" className="btn btn-secondary w-75 d-block m-auto">Salvar</button>
                 </form>
-                <div class="d-flex justify-content-center">
-                    <div class="spinner-border" role="status" hidden={carregando}>
-
-                    </div>
-                </div>
-
             </div>
         </>
     )

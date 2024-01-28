@@ -177,6 +177,12 @@ function FormularioProduto() {
 
                 <br />
 
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status" hidden={carregando}>
+
+                    </div>
+                </div>
+
                 <form className="form-inline" onSubmit={params.id_produto == "novo" ? InsertProduto : UpdateProduto}>
 
                     <div className="inputs">
@@ -258,7 +264,7 @@ function FormularioProduto() {
 
                                         <button type="submit" className="btn btn-secondary w-75 d-block m-auto">Salvar</button>
                                     </div>
-                                    
+
                                     <div className="col">
                                         <div className="form-check form-switch">
                                             <label className="form-check-label">Ativo</label>
@@ -273,13 +279,6 @@ function FormularioProduto() {
                         </div>
                     </div>
                 </form>
-
-                <div class="d-flex justify-content-center">
-                    <div class="spinner-border" role="status" hidden={carregando}>
-
-                    </div>
-                </div>
-
             </div>
         </>
     )
