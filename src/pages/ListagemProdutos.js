@@ -19,12 +19,12 @@ function ListagemProdutos() {
 
                 if (resposta.data.codigo != 200) {
 
-                    // set_carregando(true)
+                    set_carregando(true)
                     toast.error(resposta.data.message)
                 }
                 else {
 
-                    //set_carregando(true)
+                    set_carregando(true)
                     set_produtos(resposta.data.produtos)
                     set_produtoListaFormatada(resposta.data.produtos)
                 }
