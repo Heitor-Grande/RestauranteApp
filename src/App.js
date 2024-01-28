@@ -19,6 +19,7 @@ import CriarTokenCasa from './pages/criarTokenCasa';
 import TokenInvalido from './pages/tokenInvalido';
 import ListagemDeProdutos from './pages/cadastros/produtos/listagemDeProdutos';
 import FormularioProduto from './pages/cadastros/produtos/formulario';
+import Destaque from './pages/destaque';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
             <Routes>
 
               <Route path="/" element={<><LeftBar /><Outlet /></>}>
+                <Route path="destaque/restaurante" element={<Destaque />} />
                 <Route path="comanda/mesa" element={<Mesa />} />
                 <Route path="listar/produtos/categoria/:categoria" element={<ListagemProdutos />} />
                 <Route path="carregar/produto/:id_produto" element={<PedirProduto />} />

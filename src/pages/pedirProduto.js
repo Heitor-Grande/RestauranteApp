@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import { FaQuestion } from "react-icons/fa"
 import axios from "axios";
 import { toast } from 'react-toastify'
+import BtnPedidos from "../components/buttonPedido";
 
 
 function PedirProduto() {
@@ -108,6 +109,7 @@ function PedirProduto() {
                                     </div>
                                 </div>
                             </form>
+                            <BtnPedidos/>
                         </>
                     )
                 })}

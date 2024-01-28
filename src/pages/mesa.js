@@ -1,4 +1,6 @@
 
+import BtnPedidos from "../components/buttonPedido"
+
 function Mesa() {
     return (
         <>
@@ -51,6 +53,7 @@ function Mesa() {
                         </div>
                     </div>
                 </div>
+                <BtnPedidos/>
             </div>
 
         </>

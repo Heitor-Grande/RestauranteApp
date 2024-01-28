@@ -3,6 +3,8 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import { MdOutlineReadMore } from "react-icons/md"
+import BtnPedidos from "../components/buttonPedido"
+
 function ListagemProdutos() {
 
     const params = useParams()
@@ -197,6 +199,7 @@ function ListagemProdutos() {
                         </li>
                     </ul>
                 </nav>
+                <BtnPedidos/>
             </div >
         </>
     )

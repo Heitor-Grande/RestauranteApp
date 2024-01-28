@@ -62,7 +62,7 @@ function LeftBar() {
                 <div className="d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100">
                     <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="comanda">
                         <li className="nav-item">
-                            <a href="/" className="nav-link align-middle px-0">
+                            <a href="/destaque/restaurante" className="nav-link align-middle px-0">
                                 <span className="iconify text-white" data-icon="bi:house-fill"></span>
                                 <span className="ms-1 d-none d-sm-inline text-white">Nome do Restaurante</span>
                             </a>

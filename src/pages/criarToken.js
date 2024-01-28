@@ -16,7 +16,7 @@ function CriarToken() {
             }
             else{
                 localStorage.setItem("tokenCliente", resposta.data.token)
-                navigate("/")
+                navigate("/destaque/restaurante")
             }
         }).catch(function(erro){
 
