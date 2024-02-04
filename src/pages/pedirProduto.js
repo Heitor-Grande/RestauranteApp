@@ -47,6 +47,11 @@ function PedirProduto() {
 
     function addAoPedido() {
 
+        //guardo o nome do cliente para usar novamente
+        sessionStorage.setItem("nome_cliente", nomeCliente)
+
+        //os próximos produtos serão inseriddos no pedido desse cliente até ele finalizar.
+        //após finalizado, se for pedir um novo produto, pedir o nome do cliente novamente.
     }
 
 
@@ -139,7 +144,7 @@ function PedirProduto() {
                             addAoPedido()
                         }}>
                             <div className="modal-body">
-                                <p>Por que pedimos o nome nos pedidos ?</p>
+                                <p>Por que solicitamos o nome nos pedidos ?</p>
 
                                 <ul>
                                     <li><small>Solicitar o nome ajuda a garantir que cada refeição seja entregue ao destinatário correto.</small></li>
