@@ -1,17 +1,18 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 
 function LeftBar() {
 
     const navigate = useNavigate()
+    const params = useParams()
 
     const [Permissao, setPermissao] = useState("")
 
     function ValidarJWT() {
 
-        axios.get(`${process.env.REACT_APP_API}/validar/token/${localStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa") || "123"}`)
+        axios.get(`${process.env.REACT_APP_API}/validar/token/${sessionStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa") || "123"}`)
             .then(function (resposta) {
                 if (resposta.data.codigo != 200) {
 
@@ -33,7 +34,7 @@ function LeftBar() {
     const [categorias, set_categorias] = useState([])
     function carregarCategorias() {
 
-        axios.get(`${process.env.REACT_APP_API}/all/categorias/ativas/${localStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa")}`)
+        axios.get(`${process.env.REACT_APP_API}/all/categorias/ativas/${sessionStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
@@ -52,7 +53,7 @@ function LeftBar() {
     }
 
     useEffect(function () {
-        
+
         ValidarJWT()
     }, [])
 
@@ -63,7 +64,7 @@ function LeftBar() {
                     <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="comanda">
                         <li className="nav-item">
                             <a href="/destaque/restaurante" className="nav-link align-middle px-0">
-                                <span className="iconify text-white" data-icon="bi:house-fill"></span>
+                                <i className="bi bi-house-fill text-white"></i>
                                 <span className="ms-1 d-none d-sm-inline text-white">Nome do Restaurante</span>
                             </a>
                         </li>
@@ -74,7 +75,7 @@ function LeftBar() {
                         <li className="w-100">
                             <hr />
                             <a href="#submenu0" data-bs-toggle="collapse" className="nav-link px-0 align-middle">
-                                <span className="iconify text-white" data-icon="material-symbols-light:book"></span>
+                                <i className="bi bi-journal-bookmark-fill text-white"></i>
                                 <span className="ms-1 d-none d-sm-inline text-white">Comanda</span>
                             </a>
                             <ul className="collapse nav flex-column ms-1 bg-secondary p-1" id="submenu0">
@@ -89,7 +90,7 @@ function LeftBar() {
                         <li className="w-100">
                             <hr />
                             <a href="#cardapio" data-bs-toggle="collapse" className="nav-link px-0 align-middle">
-                                <span className="iconify text-white" data-icon="bi:book-fill"></span>
+                                <i className="bi bi-book-fill text-white"></i>
                                 <span className="ms-1 d-none d-sm-inline text-white">Menu</span>
                             </a>
                             <ul className="collapse nav flex-column ms-1 bg-secondary p-1" id="cardapio" data-bs-parent="#menu">
@@ -115,7 +116,7 @@ function LeftBar() {
                         {Permissao == "newLoginCasa" ? <li className="w-100">
                             <hr />
                             <a href="#configuraCasa" data-bs-toggle="collapse" className="nav-link px-0 align-middle ">
-                                <span className="iconify text-white" data-icon="dashicons:admin-tools"></span>
+                                <i className="bi bi-gear-fill text-white"></i>
                                 <span className="ms-1 d-none d-sm-inline text-white">Menu Administrativo</span>
                             </a>
 

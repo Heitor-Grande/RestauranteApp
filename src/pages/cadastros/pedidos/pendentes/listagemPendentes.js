@@ -1,8 +1,6 @@
-import { MdDeleteForever } from "react-icons/md"
-import { FaEdit } from "react-icons/fa"
-import { FaPlus } from "react-icons/fa6"
+
 import { useNavigate } from "react-router-dom"
-import { GrFormView } from "react-icons/gr";
+
 
 
 function ListagemPendentes() {
@@ -38,14 +36,14 @@ function ListagemPendentes() {
                         <div className="col border-bottom">1</div>
                         <div className="col border-bottom">Mesa 1</div>
                         <div className="col border-bottom">
-                            <MdDeleteForever onClick={function () {
-                                alert("deletar")
-                            }} />
 
-                            <GrFormView onClick={function () {
+                            <i className="bi bi-trash" onClick={function () {
+
+                            }}></i>
+
+                            <i className="bi bi-pencil-square" onClick={function () {
                                 navigate("/visualizar/pedido/1/PENDENTE")
-                            }} />
-
+                            }}></i>
                         </div>
                     </div>
                 </div>

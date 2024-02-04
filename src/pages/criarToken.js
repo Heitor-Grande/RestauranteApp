@@ -1,12 +1,13 @@
 import axios from "axios"
 import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 
 
 function CriarToken() {
 
     const navigate = useNavigate()
+    const params = useParams()
 
     function BuscarToken(){
         axios.get(`${process.env.REACT_APP_API}/criar/jwt`).then(function(resposta){
@@ -15,7 +16,9 @@ function CriarToken() {
                 toast.error(resposta.data.message)
             }
             else{
-                localStorage.setItem("tokenCliente", resposta.data.token)
+
+                sessionStorage.setItem("tokenCliente", resposta.data.token)
+                sessionStorage.setItem("id_mesa", params.id_mesa)
                 navigate("/destaque/restaurante")
             }
         }).catch(function(erro){

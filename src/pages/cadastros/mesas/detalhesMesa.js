@@ -1,9 +1,8 @@
-import { GiTable } from "react-icons/gi";
-import { FaPlus } from "react-icons/fa6"
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import BtnVoltar from "../../../components/btnVoltar"
 
 function DetalhesMesa() {
 
@@ -32,31 +31,31 @@ function DetalhesMesa() {
             })
     }
 
-    function alterarStatusMesa(status){
+    function alterarStatusMesa(status) {
 
         const dados = {
-            status:status
+            status: status
         }
 
         axios.put(`${process.env.REACT_APP_API}/alterar/status/${localStorage.getItem("tokenCasa")}/${params.id_mesa}`, dados)
-        .then(function(resposta){
+            .then(function (resposta) {
 
-            if(resposta.data.codigo == 200){
+                if (resposta.data.codigo == 200) {
 
-                toast.success(resposta.data.message)
-                carregarMesas()
-            }
-            else{
+                    toast.success(resposta.data.message)
+                    carregarMesas()
+                }
+                else {
 
-                toast.error(resposta.data.message)
-            }
-        }).catch(function(erro){
-            
-            toast.error(erro)
-        })
+                    toast.error(resposta.data.message)
+                }
+            }).catch(function (erro) {
+
+                toast.error(erro)
+            })
     }
 
-    useEffect(function(){
+    useEffect(function () {
 
         carregarMesas()
     }, [])
@@ -67,14 +66,11 @@ function DetalhesMesa() {
     return (
         <>
             <div className="col py-3">
-                <button className="btn btn-secondary d-block w-25 p-1"
-                    onClick={function () {
-                        navigate(-1)
-                    }}>
-                    <span className="iconify" data-icon="icon-park-solid:back"></span>
-                </button>
+                
+                <BtnVoltar/>
+
                 <div className="text-center">
-                    <GiTable size={50} />
+                    <i class="bi bi-table fs-4"></i>
                     <span className="d-block">Mesa {params.id_mesa}</span>
                 </div>
                 <hr />
@@ -84,7 +80,7 @@ function DetalhesMesa() {
                 <div class="form-check form-switch">
                     <label class="form-check-label" for="flexSwitchCheckChecked">Aberta</label>
                     <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked={status}
-                        onChange={function(e){
+                        onChange={function (e) {
 
                             setStatus(e.target.checked)
                             alterarStatusMesa(e.target.checked)

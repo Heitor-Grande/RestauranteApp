@@ -2,7 +2,6 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
-import { MdOutlineReadMore } from "react-icons/md"
 import BtnPedidos from "../components/buttonPedido"
 
 function ListagemProdutos() {
@@ -16,7 +15,7 @@ function ListagemProdutos() {
     function carregarProdutosDaCategoria() {
 
         set_carregando(false)
-        axios.get(`${process.env.REACT_APP_API}/carrega/produtos/by/categoria/${localStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa")}/${params.categoria}`)
+        axios.get(`${process.env.REACT_APP_API}/carrega/produtos/by/categoria/${sessionStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa")}/${params.categoria}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {

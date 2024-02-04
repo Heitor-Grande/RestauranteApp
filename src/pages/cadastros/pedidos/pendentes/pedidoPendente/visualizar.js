@@ -1,9 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom"
-import { GrFormView } from "react-icons/gr"
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { useState } from "react"
-import { FaQuestion } from "react-icons/fa"
 
 function VisualizarPedidoPendente() {
 
@@ -54,10 +52,11 @@ function VisualizarPedidoPendente() {
                             <div className="w-100"></div>
                             <div className="col border-bottom">Lanche duble bacon</div>
                             <div className="col border-bottom">2</div>
-                            <div className="col border-bottom"><GrFormView size={40} onClick={function () {
+                            <div className="col border-bottom"><i className="bi bi-eye" onClick={function () {
                                 alert("Visualizar as observações do produto")
                                 {/*se houver obs renderiza btn se não nao */ }
-                            }} /></div>
+                            }}></i>
+                            </div>
                         </div>
                     </div>
 
@@ -76,7 +75,7 @@ function VisualizarPedidoPendente() {
                     <Modal.Title>Confirmação</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p className="text-center"><FaQuestion size={50} /></p>
+                    <p className="text-center"><i className="bi bi-question-lg"></i></p>
                     <p className="text-center">{cancelamento == true ? "Atualizar pedido para status: CANCELADO ? " : params.status == "PENDENTE" ? "Atualizar pedido para status: PROCESSANDO ?" : params.status == "PROCESSANDO" ? "Atualizar pedido para status: CONCLUIDO ?" : ""}</p>
                 </Modal.Body>
                 <Modal.Footer>

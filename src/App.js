@@ -20,6 +20,7 @@ import TokenInvalido from './pages/tokenInvalido';
 import ListagemDeProdutos from './pages/cadastros/produtos/listagemDeProdutos';
 import FormularioProduto from './pages/cadastros/produtos/formulario';
 import Destaque from './pages/destaque';
+import MeusPedidos from './pages/meusPedidos';
 
 function App() {
   return (
@@ -56,9 +57,10 @@ function App() {
                 <Route path="visualizar/detalhes/mesa/:id_mesa" element={<DetalhesMesa />} />
                 <Route path="carregar/produtos/lista" element={<ListagemDeProdutos />} />
                 <Route path="formulario/produto/:id_produto" element={<FormularioProduto />} />
+                <Route path="meus/pedidos/:id_mesa" element={<MeusPedidos />} />
               </Route>
 
-              <Route path="entrar/criar/token/cliente" element={<CriarToken />} />
+              <Route path="entrar/criar/token/cliente/:id_mesa" element={<CriarToken />} />
               <Route path="entrar/criar/token/casa" element={<CriarTokenCasa />} />
               <Route path="ler/novamente/qr/code" element={<TokenInvalido />} />
 

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
-import { useFetcher, useNavigate } from "react-router-dom"
+import {useNavigate } from "react-router-dom"
 import { toast } from 'react-toastify'
 import axios from "axios"
 import { useParams } from "react-router-dom"
+import BtnVoltar from "../../../components/btnVoltar"
 
 
 function FormularioProduto() {
@@ -168,14 +169,8 @@ function FormularioProduto() {
     return (
         <>
             <div className="col py-3">
-                <button className="btn btn-secondary d-block w-25 p-1"
-                    onClick={function () {
-                        navigate(-1)
-                    }}>
-                    <span className="iconify" data-icon="icon-park-solid:back"></span>
-                </button>
 
-                <br />
+                <BtnVoltar />
 
                 <div class="d-flex justify-content-center">
                     <div class="spinner-border" role="status" hidden={carregando}>

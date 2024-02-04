@@ -1,5 +1,3 @@
-import { GiTable } from "react-icons/gi";
-import { FaPlus } from "react-icons/fa6"
 import { useNavigate, useParams } from "react-router-dom";
 import axios from 'axios'
 import { toast } from "react-toastify";
@@ -55,7 +53,7 @@ function ListagemMesas() {
     return (
         <>
             <div className="col py-3">
-                <button className="btn btn-secondary d-block" onClick={criarMesa}>Mesa <FaPlus /></button>
+                <button className="btn btn-secondary d-block" onClick={criarMesa}>Mesa <i class="bi bi-plus-circle"></i></button>
 
                 <br />
 
@@ -65,10 +63,11 @@ function ListagemMesas() {
 
                             return (
                                 <>
-                                    <div className={mesa.status == true ? "col border text-center bg-success" : "col border text-center bg-danger"}>
-                                        <GiTable color="white" size={50} onClick={function () {
+                                    <div className={mesa.status == true ? "col border text-center bg-success" : "col border text-center bg-danger"} onClick={function () {
                                             navigate(`/visualizar/detalhes/mesa/${mesa.id_mesa}`)
-                                        }} />
+                                        }}>
+                                        
+                                         <i class="bi bi-table fs-4 text-white d-block"></i>
                                         <span className="text-white">{mesa.id_mesa}</span>
                                     </div>
                                 </>

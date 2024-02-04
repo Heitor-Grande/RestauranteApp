@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from 'react-toastify'
 import axios from "axios"
+import BtnVoltar from "../../../../components/btnVoltar"
 
 function FormularioCategoria(params) {
 
@@ -104,19 +105,16 @@ function FormularioCategoria(params) {
     return (
         <>
             <div className="col py-3">
-                <button className="btn btn-secondary d-block w-25 p-1"
-                    onClick={function () {
-                        navigate(-1)
-                    }}>
-                    <span className="iconify" data-icon="icon-park-solid:back"></span>
-                </button>
-
-                <br />
+                
                 <div class="d-flex justify-content-center">
                     <div class="spinner-border" role="status" hidden={carregando}>
 
                     </div>
                 </div>
+
+
+                <BtnVoltar/>
+
                 <form className="form-inline" onSubmit={params.id_categoria == "novo" ? InsertCategoria : UpdateCategoria}>
 
                     <div className="inputs">

@@ -1,13 +1,9 @@
-import { MdDeleteForever } from "react-icons/md"
-import { FaEdit } from "react-icons/fa"
-import { FaPlus } from "react-icons/fa6"
 import { useFetcher, useNavigate } from "react-router-dom"
 import axios from "axios"
 import { toast, useToast } from "react-toastify"
 import { useEffect, useState } from "react"
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-import { FaQuestion } from "react-icons/fa"
 
 function ListaDeCategorias() {
 
@@ -146,7 +142,7 @@ function ListaDeCategorias() {
             <div className="col py-3">
                 <button className="btn btn-secondary d-block" onClick={function () {
                     navigate("/formulario/categoria/criar")
-                }}>Categorias <FaPlus /></button>
+                }}>Categorias <i className="bi bi-plus-circle"></i></button>
 
                 <br />
 
@@ -185,14 +181,15 @@ function ListaDeCategorias() {
                                     <div className="col border-bottom">{categoria.categoria}</div>
                                     <div className={categoria.ativo == true ? "col-1 border-bottom bg-success text-center p-0" : "col-1 border-bottom bg-danger text-center p-0"}>{categoria.ativo == true ? "" : ""}</div>
                                     <div className="col-3 border-bottom">
-                                        <MdDeleteForever onClick={function () {
+
+                                        <i className="bi bi-trash" onClick={function () {
                                             setIdDeletar(categoria.id_categoria)
                                             setShow(true)
-                                        }} />
+                                        }}></i>
 
-                                        <FaEdit onClick={function () {
+                                        <i className="bi bi-pencil-square" onClick={function () {
                                             navigate(`/formulario/categoria/editar/${categoria.id_categoria}`)
-                                        }} />
+                                        }}></i>
                                     </div>
                                 </>
                             )
@@ -242,7 +239,7 @@ function ListaDeCategorias() {
                     <Modal.Title>Confirmação</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p className="text-center"><FaQuestion size={50} /></p>
+                    <p className="text-center"><i className="bi bi-question-lg"></i></p>
                     <p className="text-center">Confirmar exclusão da categoria ?</p>
                 </Modal.Body>
                 <Modal.Footer>

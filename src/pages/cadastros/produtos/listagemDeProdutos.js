@@ -1,13 +1,9 @@
-import { MdDeleteForever } from "react-icons/md"
-import { FaEdit } from "react-icons/fa"
-import { FaPlus } from "react-icons/fa6"
-import { useFetcher, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { toast, useToast } from "react-toastify"
 import { useEffect, useState } from "react"
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-import { FaQuestion } from "react-icons/fa"
 
 function ListagemDeProdutos() {
 
@@ -149,7 +145,7 @@ function ListagemDeProdutos() {
             <div className="col py-3">
                 <button className="btn btn-secondary d-block" onClick={function () {
                     navigate("/formulario/produto/novo")
-                }}>Produtos <FaPlus /></button>
+                }}>Produtos <i className="bi bi-plus-circle"></i></button>
 
                 <br />
 
@@ -186,14 +182,15 @@ function ListagemDeProdutos() {
                                     <div className="col border-bottom">{produto.nome}</div>
                                     <div className={produto.status == true ? "col-1 border-bottom bg-success text-center p-0" : "col-1 border-bottom bg-danger text-center p-0"}>{produto.status == true ? "" : ""}</div>
                                     <div className="col-3 border-bottom">
-                                        <MdDeleteForever onClick={function () {
+
+                                        <i className="bi bi-trash" onClick={function () {
                                             setIdDeletar(produto.id_produto)
                                             setShow(true)
-                                        }} />
+                                        }}></i>
 
-                                        <FaEdit onClick={function () {
+                                        <i className="bi bi-pencil-square" onClick={function () {
                                             navigate(`/formulario/produto/${produto.id_produto}`)
-                                        }} />
+                                        }}></i>
                                     </div>
                                 </>
                             )
@@ -243,7 +240,7 @@ function ListagemDeProdutos() {
                     <Modal.Title>Confirmação</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p className="text-center"><FaQuestion size={50} /></p>
+                    <p className="text-center"><i className="bi bi-question-lg"></i></p>
                     <p className="text-center">Confirmar exclusão do produto ?</p>
                 </Modal.Body>
                 <Modal.Footer>
