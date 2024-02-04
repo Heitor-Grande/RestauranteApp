@@ -1,9 +1,6 @@
-import { useNavigate } from "react-router-dom"
-
 
 function ListagemPedidosConcluido() {
 
-    const navigate = useNavigate()
 
     return (
         <>
