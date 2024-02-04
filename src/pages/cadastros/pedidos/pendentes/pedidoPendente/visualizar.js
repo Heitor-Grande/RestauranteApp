@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { useState } from "react"
+import BtnVoltar from "../../../../../components/btnVoltar"
 
 function VisualizarPedidoPendente() {
 
@@ -22,14 +23,8 @@ function VisualizarPedidoPendente() {
     return (
         <>
             <div className="col py-3">
-                <button className="btn btn-secondary d-block w-25 p-1"
-                    onClick={function () {
-                        navigate(-1)
-                    }}>
-                    <span className="iconify" data-icon="icon-park-solid:back"></span>
-                </button>
 
-                <br />
+                <BtnVoltar/>
 
 
                 <div className="float-right text-end">
