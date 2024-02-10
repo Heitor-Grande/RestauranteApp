@@ -126,7 +126,7 @@ function MeusPedidos() {
                                         </button></div>
                                     </div>
                                     {/*<h6 className="card-subtitle mb-2 text-muted">Status: <i>Pendente</i></h6> */}
-                                    <h6 className="card-subtitle mb-2 text-muted">Total: R${pedido.total}</h6>
+                                    <h6 className="card-subtitle mb-2 text-muted">Total: R${pedido.soma_pedido.toString().replace(".", ",")}</h6>
                                     <h6 className="card-subtitle mb-2 text-muted">Pedido de: <b>{pedido.cliente}</b></h6>
                                     <h6 className="card-subtitle mb-2 text-muted">Status: <b>{pedido.status}</b></h6>
 
@@ -134,7 +134,7 @@ function MeusPedidos() {
 
                                     <button hidden={pedido.status == "MONTANDO" ? false : true} type="button" onClick={function () {
                                         enviar_cozinha(pedido.id_pedido)
-                                    }} className="btn btn-secondary w-100">Finalizar Pedido</button>
+                                    }} className="btn btn-secondary w-100">Enviar para cozinha</button>
                                 </div>
                             </div>
                             <br />
@@ -167,8 +167,8 @@ function MeusPedidos() {
                                                     document.querySelector("#ModalConfirmacaoBtn").click()
                                                     document.querySelector("#detalhesPedido").click()
                                                 }}></i></b>
-                                                <i className="d-block">Valor und: R${detalhe.valor_und}</i>
-                                                <i className="d-block">Total: R${detalhe.total}</i>
+                                                <i className="d-block">Valor und: R${detalhe.valor_und.toString().replace(".", ",")}</i>
+                                                <i className="d-block">Total: R${detalhe.total.toString().replace(".", ",")}</i>
                                                 <div className="pt-2"></div>
                                             </div>
                                             <br />

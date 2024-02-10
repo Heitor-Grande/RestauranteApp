@@ -127,9 +127,10 @@ function PedirProduto() {
                                             <div className="row">
                                                 <div className="col text-center">
                                                     <img src={produto.img} className="d-inline-block h-25 w-50" alt="..." />
-                                                    <h5 className="card-title text-center">{produto.nome}</h5>
+                                                    <h6 className="card-title text-center">{produto.nome}</h6>
                                                     <textarea name="" className="form-control d-block m-auto" required value={produto.descricao} disabled id="" cols="30" rows="5"
                                                         placeholder="Breve Descrição do produto" maxLength={100}></textarea>
+                                                        <br />
                                                 </div>
                                                 <div className="col">
                                                     <div className="controle">

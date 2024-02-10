@@ -1,11 +1,41 @@
 
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import axios from "axios"
+import { toast } from "react-toastify"
 
 
 
 function ListagemPendentes() {
 
     const navigate = useNavigate()
+
+    const [carregando, set_carregando] = useState(true)
+
+    const [pedidos, set_pedidos] = useState([])
+    function carregarPedidosPendentes() {
+        set_carregando(false)
+        axios.get(`${process.env.REACT_APP_API}/all/pedidos/pendentes/${localStorage.getItem("tokenCasa")}/PENDENTE`)
+            .then(function (resposta) {
+
+                if (resposta.data.codigo == 200) {
+                    set_carregando(true)
+                    set_pedidos(resposta.data.pedidos)
+                }
+                else {
+                    set_carregando(true)
+                    toast.error(resposta.data.message)
+                }
+            }).catch(function (erro) {
+                set_carregando(true)
+                toast.error(erro)
+            })
+    }
+
+    useEffect(function () {
+
+        carregarPedidosPendentes()
+    }, [])
 
     return (
         <>
@@ -20,12 +50,15 @@ function ListagemPendentes() {
 
                 <form className="form-inline d-flex">
                     <input className="form-control mr-sm-2 m-1" type="search" placeholder="Buscar por mesa" aria-label="Search" />
-                    <button className="btn btn-secondary m-1" type="submit">
-                        <span className="iconify" data-icon="material-symbols:search"></span>
-                    </button>
                 </form>
 
                 <br />
+
+                <div className="d-flex justify-content-center">
+                    <div className="spinner-border" role="status" hidden={carregando}>
+
+                    </div>
+                </div>
 
                 <div className="container">
                     <div className="row">
@@ -33,19 +66,29 @@ function ListagemPendentes() {
                         <div className="col bg-secondary text-white">Mesa</div>
                         <div className="col bg-secondary text-white">Ações</div>
                         <div className="w-100"></div>
-                        <div className="col border-bottom">1</div>
-                        <div className="col border-bottom">Mesa 1</div>
-                        <div className="col border-bottom">
+                        {pedidos.map(function (pedido) {
 
-                            <i className="bi bi-trash" onClick={function () {
+                            return (
+                                <>
 
-                            }}></i>
 
-                            <i className="bi bi-pencil-square" onClick={function () {
-                                navigate("/visualizar/pedido/1/PENDENTE")
-                            }}></i>
-                        </div>
-                    </div>
+                                    <div className="col border-bottom">{pedido.id_pedido}</div>
+                                    <div className="col border-bottom">{pedido.mesa}</div>
+                                    <div className="col border-bottom">
+
+                                        <i className="bi bi-trash" onClick={function () {
+
+                                        }}></i>
+
+                                        <i className="bi bi-pencil-square" onClick={function () {
+                                            navigate("/visualizar/pedido/1/PENDENTE")
+                                        }}></i>
+                                    </div>
+
+                                </>
+                            )
+                        })}
+                    </div >
                 </div>
             </div>
         </>

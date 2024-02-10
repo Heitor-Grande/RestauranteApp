@@ -1,7 +1,39 @@
 
+import { useEffect, useState } from "react"
 import BtnPedidos from "../components/buttonPedido"
+import axios from "axios"
+import { toast } from "react-toastify"
+import { useNavigate } from "react-router-dom"
 
 function Mesa() {
+
+    const navigate = useNavigate()
+
+    const [totalMesa, set_totalMesa] = useState("")
+    function carregarTotalMesa() {
+
+        axios.get(`${process.env.REACT_APP_API}/total/${sessionStorage.getItem("id_mesa")}/${sessionStorage.getItem("tokenCliente")}`)
+            .then(function (resposta) {
+
+                if (resposta.data.codigo == 200) {
+
+                    set_totalMesa(resposta.data.total[0].sum)
+                }
+                else {
+
+                    toast.error(resposta.data.message)
+                }
+            }).catch(function (erro) {
+
+                toast.error(erro)
+            })
+    }
+
+    useEffect(function () {
+
+        carregarTotalMesa()
+    }, [])
+
     return (
         <>
 
@@ -16,7 +48,7 @@ function Mesa() {
                                         <p>Chame um de nossos gaçons!</p>
 
                                         <button type="button" className="btn btn-secondary btn-sm w-75 mt-3 p-1">
-                                            <i class="bi bi-info-circle"></i>
+                                            <i className="bi bi-info-circle"></i>
                                             <label htmlFor="" className="w-100">Chamar</label>
                                         </button>
                                     </div>
@@ -26,8 +58,8 @@ function Mesa() {
                                         <p>Total da Mesa</p>
 
                                         <button type="button" className="btn btn-secondary btn-sm w-75 mt-3 p-1">
-                                            <i class="bi bi-wallet"></i>
-                                            <label htmlFor="" className="w-100">R$100,00</label>
+                                            <i className="bi bi-wallet"></i>
+                                            <label htmlFor="" className="w-100">R${totalMesa.toString().replace(".", ",")}</label>
                                         </button>
                                     </div>
                                 </div>
@@ -35,8 +67,19 @@ function Mesa() {
                                     <div className="p-1 text-center bg-white h-100">
                                         <p>Detalhes dos pedidos</p>
 
-                                        <button type="button" className="btn btn-secondary btn-sm w-75 mt-3 p-1">
-                                            <i class="bi bi-card-checklist"></i>
+                                        <button type="button" className="btn btn-secondary btn-sm w-75 mt-3 p-1" onClick={function () {
+
+                                            if (sessionStorage.getItem("id_mesa") != "" && sessionStorage.getItem("id_mesa") != " " && sessionStorage.getItem("id_mesa") != null && sessionStorage.getItem("id_mesa") != undefined) {
+
+                                                navigate(`/meus/pedidos/${sessionStorage.getItem("id_mesa")}`)
+                                            }
+                                            else {
+
+                                                toast.error("Nenhuma mesa vinculada.")
+                                                navigate("/ler/novamente/qr/code")
+                                            }
+                                        }}>
+                                            <i className="bi bi-card-checklist"></i>
                                             <label htmlFor="" className="w-100">Ver pedidos</label>
                                         </button>
                                     </div>
