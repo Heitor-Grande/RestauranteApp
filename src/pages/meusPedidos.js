@@ -1,34 +1,187 @@
 import { useNavigate } from "react-router-dom"
 import BtnVoltar from "../components/btnVoltar"
+import axios from "axios"
+import { toast } from "react-toastify"
+import { useEffect, useState } from "react"
+import ModalConfirmacao from "../components/modalConfirmacao"
 
 function MeusPedidos() {
 
+    const [pedidos, set_pedidos] = useState([])
+    function carregarPedidosDaMesa() {
+
+        axios.get(`${process.env.REACT_APP_API}/carregar/pedidos/${sessionStorage.getItem("id_mesa")}/${sessionStorage.getItem("tokenCliente")}`)
+            .then(function (resposta) {
+
+                if (resposta.data.codigo != 200) {
+
+                    toast.error(resposta.data.message)
+                }
+                else {
+
+                    set_pedidos(resposta.data.pedidos)
+                }
+
+            }).catch(function (erro) {
+
+                toast.error(erro)
+            })
+    }
+
+    const [detalhes, set_detalhes] = useState([])
+    function carregarPedidoDetalhe(id_pedido) {
+
+        axios.get(`${process.env.REACT_APP_API}/carregar/detalhes/${id_pedido}/${sessionStorage.getItem("tokenCliente")}`)
+            .then(function (resposta) {
+
+                if (resposta.data.codigo != 200) {
+
+                    toast.error(resposta.data.message)
+                }
+                else {
+
+                    set_detalhes(resposta.data.detalhes)
+                }
+
+            }).catch(function (erro) {
+
+                toast.error(erro)
+            })
+    }
+
+    const [id_detalhe, set_id_detalhe] = useState("")
+    const [id_pedido, set_id_pedido] = useState("")
+
+    function deletarDetalhe(id_detalhe, id_pedido) {
+
+        axios.get(`${process.env.REACT_APP_API}/deleta/detalhe/${id_detalhe}/${sessionStorage.getItem("tokenCliente")}`)
+            .then(function (resposta) {
+
+                if (resposta.data.codigo != 200) {
+
+                    toast.error(resposta.data.message)
+                    carregarPedidoDetalhe(id_pedido)
+                    document.querySelector("#ModalConfirmacaoBtn").click()
+                }
+                else {
+
+                    toast.success(resposta.data.message)
+                    carregarPedidoDetalhe(id_pedido)
+                    document.querySelector("#ModalConfirmacaoBtn").click()
+                }
+
+            }).catch(function (erro) {
+
+                toast.error(erro)
+            })
+    }
+
+
+    function enviar_cozinha(id_pedido) {
+
+        axios.put(`${process.env.REACT_APP_API}/atualizar/status/${id_pedido}/${sessionStorage.getItem("tokenCliente")}/${sessionStorage.getItem("id_mesa")}`)
+            .then(function (resposta) {
+
+                if (resposta.data.codigo == 200) {
+
+                    toast.success(resposta.data.message)
+                    carregarPedidosDaMesa()
+                }
+                else {
+
+                    toast.error(resposta.data.message)
+                }
+            }).catch(function (erro) {
+
+                toast.error(erro)
+            })
+    }
+
+    useEffect(function () {
+
+        carregarPedidosDaMesa()
+    }, [])
 
     return (
         <>
             <div className="col py-3">
 
-                <BtnVoltar/>
+                <BtnVoltar />
 
 
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Pedido #1</h4>
-                        {/*<h6 className="card-subtitle mb-2 text-muted">Status: <i>Pendente</i></h6> */}
-                        <h6 className="card-subtitle mb-2 text-muted">Total: R$9,00</h6>
-                        <h6 className="card-subtitle mb-2 text-muted">Pedido de: <b>Heitor Grande</b></h6>
 
-                        <br />
+                {pedidos.map(function (pedido) {
 
-                        <p className="mb-0"><b>Produtos pedidos:</b></p>
-                        <p><i>2 - Coca-Cola Lata - R$4,50 und - total: R$9,00</i></p>
-                        
-                        <br />
-                        <button className="btn btn-secondary w-100">Finalizar Pedido</button>
+                    return (
+                        <>
+                            <div className="card">
+                                <div className="card-body">
+
+                                    <div className="d-flex">
+                                        <h4 className="card-title">Pedido #{pedido.id_pedido}</h4>
+                                        <div className="w-50 text-end"><button type="button" className="border-0 bg-white" data-toggle="modal" data-target="#detalhesPedido">
+                                            <i className="bi bi-pencil-square fs-4" onClick={function () {
+                                                carregarPedidoDetalhe(pedido.id_pedido)
+                                            }}></i>
+                                        </button></div>
+                                    </div>
+                                    {/*<h6 className="card-subtitle mb-2 text-muted">Status: <i>Pendente</i></h6> */}
+                                    <h6 className="card-subtitle mb-2 text-muted">Total: R${pedido.total}</h6>
+                                    <h6 className="card-subtitle mb-2 text-muted">Pedido de: <b>{pedido.cliente}</b></h6>
+                                    <h6 className="card-subtitle mb-2 text-muted">Status: <b>{pedido.status}</b></h6>
+
+                                    <br />
+
+                                    <button hidden={pedido.status == "MONTANDO" ? false : true} type="button" onClick={function () {
+                                        enviar_cozinha(pedido.id_pedido)
+                                    }} className="btn btn-secondary w-100">Finalizar Pedido</button>
+                                </div>
+                            </div>
+                            <br />
+                        </>
+                    )
+                })}
+
+
+                {/*MODAL DETALHE PEDIDO */}
+                <div className="modal fade" id="detalhesPedido" tabIndex={-1} role="dialog" aria-labelledby="detalhesPedidoLabel" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="detalhesPedidoLabel">Editar Pedido</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                {detalhes.map(function (detalhe) {
+
+                                    return (
+                                        <>
+                                            <div className="prod text-center">
+                                                <b><i>{detalhe.qtd} - {detalhe.produto}</i> - <i className="bi bi-trash" onClick={function () {
+
+                                                    set_id_detalhe(detalhe.id_pedido_detalhe)
+                                                    set_id_pedido(detalhe.id_pedido)
+
+                                                    document.querySelector("#ModalConfirmacaoBtn").click()
+                                                    document.querySelector("#detalhesPedido").click()
+                                                }}></i></b>
+                                                <i className="d-block">Valor und: R${detalhe.valor_und}</i>
+                                                <i className="d-block">Total: R${detalhe.total}</i>
+                                                <div className="pt-2"></div>
+                                            </div>
+                                            <br />
+                                        </>
+                                    )
+                                })}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <br />
+
+                <ModalConfirmacao mensagem='Excluir o produto do pedido ?' funcao={deletarDetalhe} parametro={[id_detalhe, id_pedido]} mensagem_btn='Excluir' />
             </div>
         </>
     )

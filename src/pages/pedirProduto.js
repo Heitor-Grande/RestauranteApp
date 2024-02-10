@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
 import { toast } from 'react-toastify'
 import BtnPedidos from "../components/buttonPedido";
@@ -45,19 +43,58 @@ function PedirProduto() {
             })
     }
 
+    const [obs, set_obs] = useState("")
+    const [disabledName, set_disabledName] = useState(false)
     function addAoPedido() {
 
         //guardo o nome do cliente para usar novamente
-        sessionStorage.setItem("nome_cliente", nomeCliente)
-
+        localStorage.setItem("nome_cliente", nomeCliente)
         //os próximos produtos serão inseriddos no pedido desse cliente até ele finalizar.
         //após finalizado, se for pedir um novo produto, pedir o nome do cliente novamente.
+
+        const dados = {
+
+            qtde: quantidadePedido,
+            obs: obs,
+            cliente: nomeCliente
+        }
+
+
+        if (!sessionStorage.getItem("tokenCliente")) {
+
+            toast.error("Token não permitido para fazer pedidos.")
+        }
+        else {
+
+            axios.post(`${process.env.REACT_APP_API}/criar/pedido/${sessionStorage.getItem("id_mesa")}/${sessionStorage.getItem("tokenCliente")}/${params.id_produto}`, dados)
+                .then(function (resposta) {
+
+                    if (resposta.data.codigo == 200) {
+
+                        toast.success(resposta.data.message)
+                        navigate(-1)
+                    }
+                    else {
+
+                        toast.error(resposta.data.message)
+                    }
+                }).catch(function (erro) {
+
+                    toast.error(erro)
+                })
+        }
     }
 
 
     useEffect(function () {
 
         carregarProduto()
+
+        if (localStorage.getItem("nome_cliente")) {
+
+            set_nomeCliente(localStorage.getItem("nome_cliente"))
+            set_disabledName(true)
+        }
     }, [])
 
     return (
@@ -103,7 +140,9 @@ function PedirProduto() {
                                                         }} />
                                                         <div className="w-100 p-1"></div>
                                                         <h5 className="text-center">R${produto.preco.toString().replace('.', ',')}</h5>
-                                                        <textarea className="form-control" aria-label="With textarea" placeholder="Escreva aqui suas obervações para o pedido" cols={30} rows={5}></textarea>
+                                                        <textarea className="form-control" aria-label="With textarea" value={obs} onChange={function (e) {
+                                                            set_obs(e.target.value)
+                                                        }} placeholder="Escreva aqui suas obervações para o pedido" cols={30} rows={5}></textarea>
                                                     </div>
                                                     <br />
 
@@ -152,12 +191,12 @@ function PedirProduto() {
                                 </ul>
 
                                 <br />
-                                <input type="text" className="text-center form-control w-100 d-block m-auto" value={nomeCliente} placeholder="Nome" required onChange={function (e) {
+                                <input type="text" disabled={disabledName} className="text-center form-control w-100 d-block m-auto" value={nomeCliente} placeholder="Nome" required onChange={function (e) {
                                     set_nomeCliente(e.target.value)
                                 }} />
                             </div>
                             <div className="modal-footer">
-                                <button type="submit" className="btn btn-secondary btn-sm">Finalizar Pedido</button>
+                                <button type="submit" className="btn btn-secondary btn-sm">Adicionar</button>
                             </div>
                         </form>
 
