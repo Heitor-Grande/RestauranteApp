@@ -26,7 +26,7 @@ function ModalConfirmacao({ mensagem, funcao, mensagem_btn, parametro, idModal, 
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary btn-sm"
                                 onClick={function () {
-                                    funcao(parametro[0], parametro[1])
+                                    parametro == "" ? funcao() : funcao(parametro[0], parametro[1])
                                 }}>{mensagem_btn}</button>
                         </div>
                     </div>

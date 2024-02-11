@@ -72,7 +72,7 @@ function LeftBar() {
                         <br />
 
 
-                        <li className="w-100">
+                        {Permissao == "newLoginCasa" ? "" : <li className="w-100" hidden={Permissao == "newLoginCasa" ? true : false}>
                             <hr />
                             <a href="#submenu0" data-bs-toggle="collapse" className="nav-link px-0 align-middle">
                                 <i className="bi bi-journal-bookmark-fill text-white"></i>
@@ -85,7 +85,8 @@ function LeftBar() {
                                 </li>
                                 <hr />
                             </ul>
-                        </li>
+                        </li>}
+
 
                         <li className="w-100">
                             <hr />

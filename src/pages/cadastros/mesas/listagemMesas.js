@@ -54,7 +54,7 @@ function ListagemMesas() {
         <>
             <div className="col py-3">
                 <button className="btn btn-secondary d-block" onClick={criarMesa}>Mesa <i class="bi bi-plus-circle"></i></button>
-
+                <small className="p-1">v1.0.0</small>
                 <br />
 
                 <div className="container">
@@ -64,10 +64,10 @@ function ListagemMesas() {
                             return (
                                 <>
                                     <div className={mesa.status == true ? "col border text-center bg-success" : "col border text-center bg-danger"} onClick={function () {
-                                            navigate(`/visualizar/detalhes/mesa/${mesa.id_mesa}`)
-                                        }}>
-                                        
-                                         <i class="bi bi-table fs-4 text-white d-block"></i>
+                                        navigate(`/visualizar/detalhes/mesa/${mesa.id_mesa}`)
+                                    }}>
+
+                                        <i class="bi bi-table fs-4 text-white d-block"></i>
                                         <span className="text-white">{mesa.id_mesa}</span>
                                     </div>
                                 </>

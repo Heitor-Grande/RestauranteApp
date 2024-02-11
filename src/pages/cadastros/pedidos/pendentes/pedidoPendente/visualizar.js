@@ -92,7 +92,7 @@ function VisualizarPedidoPendente() {
 
                     <div className="container">
                         <div className="row">
-                            <div className="col-6 bg-secondary text-white">Produto</div>
+                            <div className="col bg-secondary text-white">Produto</div>
                             <div className="col bg-secondary text-white">Qtd</div>
                             <div className="col bg-secondary text-white">Obs</div>
                             <div className="w-100"></div>
@@ -100,7 +100,7 @@ function VisualizarPedidoPendente() {
 
                                 return (
                                     <>
-                                        <div className="col-7 border-bottom">{detalhe.produto}</div>
+                                        <div className="col border-bottom">{detalhe.produto}</div>
                                         <div className="col border-bottom">{detalhe.qtd}</div>
                                         <div className="col border-bottom"><i className={detalhe.obs != "" && detalhe.obs != null ? "bi bi-eye" : ""} onClick={function () {
                                             alert(`${detalhe.obs || "Sem observações"}`)
@@ -114,7 +114,7 @@ function VisualizarPedidoPendente() {
                     </div>
 
                     <br />
-                    <button className="btn btn-secondary m-auto d-block" onClick={function () {
+                    <button disabled={params.status == "CONCLUIDO" ? true : false} className="btn btn-secondary m-auto d-block" onClick={function () {
 
                         set_statusAtualizar(params.status == "PENDENTE" ? "PROCESSANDO" : params.status == "PROCESSANDO" ? "CONCLUIDO" : "")
                         document.querySelector("#ModalConfirmacaoBtn").click()
