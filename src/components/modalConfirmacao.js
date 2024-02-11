@@ -1,18 +1,18 @@
 
 
-function ModalConfirmacao({ mensagem, funcao, mensagem_btn, parametro }) {
+function ModalConfirmacao({ mensagem, funcao, mensagem_btn, parametro, idModal, idBtnModal, data_target }) {
 
     return (
         <>
-            <button type="button" id="ModalConfirmacaoBtn" className="btn btn-primary" data-toggle="modal" data-target="#ModalConfirmacao" hidden>
+            <button type="button" id={idBtnModal || "ModalConfirmacaoBtn"} className="btn btn-primary" data-toggle="modal" data-target={data_target || "#ModalConfirmacao"} hidden>
                 Launch demo modal
             </button>
 
-            <div className="modal fade" id="ModalConfirmacao" tabIndex={-1} role="dialog" aria-labelledby="ModalConfirmacaoLabel" aria-hidden="true">
+            <div className="modal fade" id={idModal || "ModalConfirmacao"} tabIndex={-1} role="dialog" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="ModalConfirmacaoLabel">Confirmação</h5>
+                            <h5 className="modal-title">Confirmação</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
