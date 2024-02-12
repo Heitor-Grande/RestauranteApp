@@ -144,16 +144,17 @@ function ListagemProdutos() {
                                         }}>
 
                                             <div className="card-body text-center">
-                                                <img src={produto.img} className="d-inline-block h-50 w-75" />
+                                                {produto.img != "" && produto.img != null ? <img src={produto.img} className="d-inline-block h-50 w-75" /> : "" }
+                                                
 
                                                 <hr />
-                                                <div className="col">
+                                                <div className="col overflow-auto text-nowrap">
                                                     <p>{produto.nome}</p>
 
                                                 </div>
                                                 <div className="w-100 p-1"></div>
-                                                <div className="col">
-                                                    <h4>R${produto.preco.toString().replace('.', ',')}</h4>
+                                                <div className="col overflow-auto text-nowrap">
+                                                    <h6>R${produto.preco.toString().replace('.', ',')}</h6>
                                                 </div>
 
                                             </div>

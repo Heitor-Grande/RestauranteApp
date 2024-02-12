@@ -9,26 +9,43 @@ function CriarToken() {
     const navigate = useNavigate()
     const params = useParams()
 
-    function BuscarToken(){
-        axios.get(`${process.env.REACT_APP_API}/criar/jwt`).then(function(resposta){
+    function BuscarToken() {
+        axios.get(`${process.env.REACT_APP_API}/criar/jwt`).then(function (respostaToken) {
 
-            if(resposta.data.codigo == 400){
-                toast.error(resposta.data.message)
+            if (respostaToken.data.codigo == 400) {
+                toast.error(respostaToken.data.message)
             }
-            else{
+            else {
 
-                sessionStorage.setItem("tokenCliente", resposta.data.token)
-                sessionStorage.setItem("id_mesa", params.id_mesa)
-                navigate("/destaque/restaurante")
+                validarMesa(respostaToken)
             }
-        }).catch(function(erro){
+        }).catch(function (erro) {
 
             toast.error(erro)
         })
 
     }
 
-    useEffect(function(){
+    function validarMesa(respostaToken) {
+
+        axios.get(`${process.env.REACT_APP_API}/validar/mesa/${params.id_mesa}`).then(function (resposta) {
+
+            if (resposta.data.codigo == 400) {
+                toast.error(resposta.data.message)
+            }
+            else {
+
+                sessionStorage.setItem("tokenCliente", respostaToken.data.token)
+                sessionStorage.setItem("id_mesa", params.id_mesa)
+                navigate("/comanda/mesa")
+            }
+        }).catch(function (erro) {
+
+            toast.error(erro)
+        })
+    }
+
+    useEffect(function () {
         BuscarToken()
     }, [])
 

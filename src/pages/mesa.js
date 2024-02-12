@@ -29,6 +29,25 @@ function Mesa() {
             })
     }
 
+    function chamarGarcom() {
+
+        axios.put(`${process.env.REACT_APP_API}/chamado/true/${sessionStorage.getItem("tokenCliente")}/${sessionStorage.getItem("id_mesa")}`)
+            .then(function (resposta) {
+
+                if (resposta.data.codigo == 200) {
+
+                    toast.success(resposta.data.message)
+                }
+                else {
+
+                    toast.error(resposta.data.message)
+                }
+            }).catch(function (erro) {
+
+                toast.error(erro)
+            })
+    }
+
     useEffect(function () {
 
         carregarTotalMesa()
@@ -47,7 +66,9 @@ function Mesa() {
                                         <p>Precisa de algo ?</p>
                                         <p>Chame um de nossos gaçons!</p>
 
-                                        <button type="button" className="btn btn-secondary btn-sm w-75 mt-3 p-1">
+                                        <button type="button" className="btn btn-secondary btn-sm w-75 mt-3 p-1" onClick={function () {
+                                            chamarGarcom()
+                                        }}>
                                             <i className="bi bi-info-circle"></i>
                                             <label htmlFor="" className="w-100">Chamar</label>
                                         </button>
@@ -59,7 +80,7 @@ function Mesa() {
 
                                         <button type="button" className="btn btn-secondary btn-sm w-75 mt-3 p-1">
                                             <i className="bi bi-wallet"></i>
-                                            <label htmlFor="" className="w-100">R${totalMesa.toString().replace(".", ",")}</label>
+                                            <label htmlFor="" className="w-100">R${totalMesa != "" && totalMesa != null ? totalMesa.toString().replace(".", ",") : "00,00"}</label>
                                         </button>
                                     </div>
                                 </div>

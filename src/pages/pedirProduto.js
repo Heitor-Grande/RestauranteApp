@@ -48,7 +48,7 @@ function PedirProduto() {
     function addAoPedido() {
 
         //guardo o nome do cliente para usar novamente
-        localStorage.setItem("nome_cliente", nomeCliente)
+        sessionStorage.setItem("nome_cliente", nomeCliente)
         //os próximos produtos serão inseriddos no pedido desse cliente até ele finalizar.
         //após finalizado, se for pedir um novo produto, pedir o nome do cliente novamente.
 
@@ -90,9 +90,9 @@ function PedirProduto() {
 
         carregarProduto()
 
-        if (localStorage.getItem("nome_cliente")) {
+        if (sessionStorage.getItem("nome_cliente")) {
 
-            set_nomeCliente(localStorage.getItem("nome_cliente"))
+            set_nomeCliente(sessionStorage.getItem("nome_cliente"))
             set_disabledName(true)
         }
     }, [])

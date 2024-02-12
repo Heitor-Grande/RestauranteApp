@@ -60,13 +60,15 @@ function MeusPedidos() {
                 if (resposta.data.codigo != 200) {
 
                     toast.error(resposta.data.message)
-                    carregarPedidoDetalhe(id_pedido)
+                    //carregarPedidoDetalhe(id_pedido)
+                    carregarPedidosDaMesa()
                     document.querySelector("#ModalConfirmacaoBtn").click()
                 }
                 else {
 
                     toast.success(resposta.data.message)
-                    carregarPedidoDetalhe(id_pedido)
+                    carregarPedidosDaMesa()
+                    //carregarPedidoDetalhe(id_pedido)
                     document.querySelector("#ModalConfirmacaoBtn").click()
                 }
 
@@ -86,6 +88,7 @@ function MeusPedidos() {
 
                     toast.success(resposta.data.message)
                     carregarPedidosDaMesa()
+                    document.querySelector("#ModalEnviarBtn").click()
                 }
                 else {
 
@@ -110,37 +113,45 @@ function MeusPedidos() {
 
 
 
-                {pedidos.map(function (pedido) {
+                {
 
-                    return (
-                        <>
-                            <div className="card">
-                                <div className="card-body">
+                    pedidos.length > 0 ? pedidos.map(function (pedido) {
 
-                                    <div className="d-flex">
-                                        <h4 className="card-title">Pedido #{pedido.id_pedido}</h4>
-                                        <div className="w-50 text-end"><button type="button" className="border-0 bg-white" data-toggle="modal" data-target="#detalhesPedido">
-                                            <i className="bi bi-pencil-square fs-4" onClick={function () {
-                                                carregarPedidoDetalhe(pedido.id_pedido)
-                                            }}></i>
-                                        </button></div>
+                        return (
+                            <>
+                                <div className="card">
+                                    <div className="card-body">
+
+                                        <div className="d-flex">
+                                            <h4 className="card-title">Pedido #{pedido.id_pedido} - <button type="button" className="border-0 bg-white" data-toggle="modal" data-target="#detalhesPedido">
+                                                <i className="bi bi-pencil-square fs-4" onClick={function () {
+                                                    carregarPedidoDetalhe(pedido.id_pedido)
+                                                }}></i>
+                                            </button></h4>
+
+                                        </div>
+                                        {/*<h6 className="card-subtitle mb-2 text-muted">Status: <i>Pendente</i></h6> */}
+                                        <h6 className="card-subtitle mb-2 text-muted">Total: R${pedido.soma_pedido.toString().replace(".", ",")}</h6>
+                                        <h6 className="card-subtitle mb-2 text-muted">Pedido de: <b>{pedido.cliente}</b></h6>
+                                        <h6 className="card-subtitle mb-2 text-muted">Status: <b>{pedido.status}</b></h6>
+
+                                        <br />
+
+                                        <button hidden={pedido.status == "MONTANDO" ? false : true}
+                                            type="button" className="btn btn-secondary w-100" id="ModalEnviarBtn"
+                                            data-toggle="modal" data-target="#ModalEnviar">Enviar para cozinha</button>
                                     </div>
-                                    {/*<h6 className="card-subtitle mb-2 text-muted">Status: <i>Pendente</i></h6> */}
-                                    <h6 className="card-subtitle mb-2 text-muted">Total: R${pedido.soma_pedido.toString().replace(".", ",")}</h6>
-                                    <h6 className="card-subtitle mb-2 text-muted">Pedido de: <b>{pedido.cliente}</b></h6>
-                                    <h6 className="card-subtitle mb-2 text-muted">Status: <b>{pedido.status}</b></h6>
-
-                                    <br />
-
-                                    <button hidden={pedido.status == "MONTANDO" ? false : true} type="button" onClick={function () {
-                                        enviar_cozinha(pedido.id_pedido)
-                                    }} className="btn btn-secondary w-100">Enviar para cozinha</button>
                                 </div>
-                            </div>
-                            <br />
-                        </>
-                    )
-                })}
+                                <br />
+                            </>
+                        )
+                    }) : <>
+                        <div className="text-center">
+                            <i className="px-3">Nenhum pedido feito.</i>
+                        </div>
+                        <hr />
+                    </>
+                }
 
 
                 {/*MODAL DETALHE PEDIDO */}
@@ -182,6 +193,7 @@ function MeusPedidos() {
 
 
                 <ModalConfirmacao mensagem='Excluir o produto do pedido ?' funcao={deletarDetalhe} parametro={[id_detalhe, id_pedido]} mensagem_btn='Excluir' />
+                <ModalConfirmacao mensagem='Enviar pedido para cozinha ?' funcao={enviar_cozinha} parametro={[]} mensagem_btn='Enviar' idModal={"ModalEnviar"} idBtnModal={"ModalEnviarBtn"} data_target={"#ModalEnviar"} />
             </div>
         </>
     )

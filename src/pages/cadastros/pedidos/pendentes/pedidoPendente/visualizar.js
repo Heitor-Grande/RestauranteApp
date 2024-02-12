@@ -107,6 +107,7 @@ function VisualizarPedidoPendente() {
                                             {/*se houver obs renderiza btn se não nao */ }
                                         }}></i>
                                         </div>
+                                        <div className="w-100"></div>
                                     </>
                                 )
                             })}

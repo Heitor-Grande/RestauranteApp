@@ -100,7 +100,13 @@ function ListagemPedidosConcluido() {
     useEffect(function () {
 
         carregarPedidoS()
+        set_paginaAtual(1)
     }, [])
+
+    useEffect(function(){
+
+        paginacao(1)
+    }, [pedidos])
 
     return (
         <>

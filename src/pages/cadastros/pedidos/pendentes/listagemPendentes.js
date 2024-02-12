@@ -39,7 +39,7 @@ function ListagemPendentes() {
     const [pedidosListaFormatada, set_pedidoListaFormatada] = useState([])
     function search(string) {
 
-       
+
         set_busca(string)
 
         if (string == "") {
@@ -47,7 +47,7 @@ function ListagemPendentes() {
             carregarPedidoS()
             set_paginaAtual(1)
         }
-        else {  
+        else {
 
             const search_formatada = string.toString()
 
@@ -98,11 +98,17 @@ function ListagemPendentes() {
         }
 
     }
-
+    
     useEffect(function () {
 
         carregarPedidoS()
+        set_paginaAtual(1)
     }, [])
+
+    useEffect(function () {
+
+        paginacao(1)
+    }, [pedidos])
 
     return (
         <>

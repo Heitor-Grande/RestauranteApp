@@ -59,21 +59,21 @@ function LeftBar() {
 
     return (
         <>
-            <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-3 bg-dark">
+            <div id="leftBar" className="col-auto col-md-3 col-xl-2 px-sm-2 px-3 bg-dark">
                 <div className="d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100">
                     <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="comanda">
-                        <li className="nav-item">
+                        {/*<li className="nav-item">
                             <a href="/destaque/restaurante" className="nav-link align-middle px-0">
                                 <i className="bi bi-house-fill text-white"></i>
                                 <span className="ms-1 d-none d-sm-inline text-white">Nome do Restaurante</span>
                             </a>
                         </li>
 
-                        <br />
+                        <br /> */}
 
 
                         {Permissao == "newLoginCasa" ? "" : <li className="w-100" hidden={Permissao == "newLoginCasa" ? true : false}>
-                            <hr />
+                            
                             <a href="#submenu0" data-bs-toggle="collapse" className="nav-link px-0 align-middle">
                                 <i className="bi bi-journal-bookmark-fill text-white"></i>
                                 <span className="ms-1 d-none d-sm-inline text-white">Comanda</span>
