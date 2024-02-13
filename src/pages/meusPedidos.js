@@ -10,20 +10,24 @@ function MeusPedidos() {
     const [pedidos, set_pedidos] = useState([])
     function carregarPedidosDaMesa() {
 
+        set_carregando(false)
         axios.get(`${process.env.REACT_APP_API}/carregar/pedidos/${sessionStorage.getItem("id_mesa")}/${sessionStorage.getItem("tokenCliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
 
+                    set_carregando(true)
                     toast.error(resposta.data.message)
                 }
                 else {
 
+                    set_carregando(true)
                     set_pedidos(resposta.data.pedidos)
                 }
 
             }).catch(function (erro) {
 
+                set_carregando(true)
                 toast.error(erro)
             })
     }
@@ -100,6 +104,8 @@ function MeusPedidos() {
             })
     }
 
+    const [carregando, set_carregando] = useState(true)
+
     useEffect(function () {
 
         carregarPedidosDaMesa()
@@ -111,7 +117,11 @@ function MeusPedidos() {
 
                 <BtnVoltar />
 
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status" hidden={carregando}>
 
+                    </div>
+                </div>
 
                 {
 

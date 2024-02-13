@@ -75,6 +75,7 @@ function ListagemMesas() {
         })
     }
 
+    const [carregando, set_carregando] = useState(true)
 
     useEffect(function () {
         carregarMesas()
@@ -92,13 +93,19 @@ function ListagemMesas() {
                     </div>
                     <br />
 
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status" hidden={carregando}>
+
+                        </div>
+                    </div>
+
                     <div className="container">
                         <div className="row">
                             {mesas.map(function (mesa) {
 
                                 return (
                                     <>
-                                        <div className={mesa.status == true && mesa.chamado == false ? "col border text-center bg-success": mesa.status == false && mesa.chamado == false ? "col border text-center bg-danger"  : "col border text-center bg-primary"} onClick={function () {
+                                        <div className={mesa.status == true && mesa.chamado == false ? "col border text-center bg-success" : mesa.status == false && mesa.chamado == false ? "col border text-center bg-danger" : "col border text-center bg-primary"} onClick={function () {
                                             navigate(`/visualizar/detalhes/mesa/${mesa.id_mesa}`)
                                         }}>
 

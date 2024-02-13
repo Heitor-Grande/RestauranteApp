@@ -12,19 +12,23 @@ function Mesa() {
     const [totalMesa, set_totalMesa] = useState("")
     function carregarTotalMesa() {
 
+        set_carregando(false)
         axios.get(`${process.env.REACT_APP_API}/total/${sessionStorage.getItem("id_mesa")}/${sessionStorage.getItem("tokenCliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo == 200) {
 
+                    set_carregando(true)
                     set_totalMesa(resposta.data.total[0].sum)
                 }
                 else {
 
+                    set_carregando(true)
                     toast.error(resposta.data.message)
                 }
             }).catch(function (erro) {
 
+                set_carregando(true)
                 toast.error(erro)
             })
     }
@@ -48,6 +52,7 @@ function Mesa() {
             })
     }
 
+    const [carregando, set_carregando] = useState(true)
     useEffect(function () {
 
         carregarTotalMesa()
@@ -58,6 +63,13 @@ function Mesa() {
 
             <div className="col py-3">
                 <div className="card h-50">
+
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status" hidden={carregando}>
+
+                        </div>
+                    </div>
+
                     <div className="card-body">
                         <div id="carouselExampleInterval" className="carousel slide p-2 h-100" data-bs-ride="carousel">
                             <div className="carousel-inner h-100">

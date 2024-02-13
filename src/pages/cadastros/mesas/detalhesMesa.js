@@ -35,20 +35,24 @@ function DetalhesMesa() {
     const [chamado, setChamado] = useState(true)
     function carregarMesas() {
 
+        set_carregando(false)
         axios.get(`${process.env.REACT_APP_API}/selecionar/mesa/${localStorage.getItem("tokenCasa")}/${params.id_mesa}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
 
+                    set_carregando(true)
                     toast.error(resposta.data.message)
                 }
                 else {
 
+                    set_carregando(true)
                     setStatus(resposta.data.mesa[0].status)
                     setChamado(resposta.data.mesa[0].chamado)
                 }
             }).catch(function (erro) {
 
+                set_carregando(true)
                 toast.error(erro)
             })
     }
@@ -140,19 +144,23 @@ function DetalhesMesa() {
     const [totalMesa, set_totalMesa] = useState("")
     function carregarTotalMesa() {
 
+        set_carregando(true)
         axios.get(`${process.env.REACT_APP_API}/total/${params.id_mesa}/${localStorage.getItem("tokenCasa")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo == 200) {
 
+                    set_carregando(false)
                     set_totalMesa(resposta.data.total[0].sum)
                 }
                 else {
 
+                    set_carregando(false)
                     toast.error(resposta.data.message)
                 }
             }).catch(function (erro) {
 
+                set_carregando(true)
                 toast.error(erro)
             })
     }
@@ -177,6 +185,8 @@ function DetalhesMesa() {
         })
     }
 
+    const [carregando, set_carregando] = useState(true)
+
     useEffect(function () {
 
         carregarMesas()
@@ -192,6 +202,13 @@ function DetalhesMesa() {
 
                 <div hidden={hidden}>
                     <BtnVoltar />
+
+
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status" hidden={carregando}>
+
+                        </div>
+                    </div>
 
                     <div className="text-center">
                         <i className="bi bi-table fs-4"></i>
@@ -238,9 +255,9 @@ function DetalhesMesa() {
                         }}>Histórico</button>
 
                         <button hidden={chamado == false ? true : false} type="button" className="btn btn-primary btn-sm me-1 mb-1"
-                        onClick={function(){
-                            chamarGarcom()
-                        }}>Atendido</button>
+                            onClick={function () {
+                                chamarGarcom()
+                            }}>Atendido</button>
                     </div>
 
                     <ModalConfirmacao mensagem={"Confirmar limpeza da mesa ?"} funcao={LimparMesa} mensagem_btn={"Confirmar"} parametro={""} idModal={"ModallimparMesa"} idBtnModal={"ModallimparMesaBtn"} data_target={"#ModallimparMesa"} />
