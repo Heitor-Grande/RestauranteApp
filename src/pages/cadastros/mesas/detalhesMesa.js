@@ -229,7 +229,7 @@ function DetalhesMesa() {
                         />
                     </div>
 
-                    <p>Total da mesa: {totalMesa}</p>
+                    <p>Total da mesa: {totalMesa != "" && totalMesa != null ? totalMesa.toString().replace(".", ",") : "00,00" }</p>
 
 
                     <button type="button" className="btn btn-link d-block m-auto" onClick={function () {
