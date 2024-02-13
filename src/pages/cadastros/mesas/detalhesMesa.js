@@ -144,18 +144,18 @@ function DetalhesMesa() {
     const [totalMesa, set_totalMesa] = useState("")
     function carregarTotalMesa() {
 
-        set_carregando(true)
+        set_carregando(false)
         axios.get(`${process.env.REACT_APP_API}/total/${params.id_mesa}/${localStorage.getItem("tokenCasa")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo == 200) {
 
-                    set_carregando(false)
+                    set_carregando(true)
                     set_totalMesa(resposta.data.total[0].sum)
                 }
                 else {
 
-                    set_carregando(false)
+                    set_carregando(true)
                     toast.error(resposta.data.message)
                 }
             }).catch(function (erro) {
