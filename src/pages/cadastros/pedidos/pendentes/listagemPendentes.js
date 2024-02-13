@@ -163,6 +163,7 @@ function ListagemPendentes() {
                                             navigate(`/visualizar/pedido/${pedido.id_pedido}/${pedido.status}`)
                                         }}></i>
                                     </div>
+                                    <div className="w-100"></div>
 
                                 </>
                             )
