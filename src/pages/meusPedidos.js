@@ -84,7 +84,7 @@ function MeusPedidos() {
 
 
     function enviar_cozinha(id_pedido) {
-
+        
         axios.put(`${process.env.REACT_APP_API}/atualizar/status/${id_pedido}/${sessionStorage.getItem("tokenCliente")}/${sessionStorage.getItem("id_mesa")}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
@@ -149,7 +149,10 @@ function MeusPedidos() {
 
                                         <button hidden={pedido.status == "MONTANDO" ? false : true}
                                             type="button" className="btn btn-secondary w-100" id="ModalEnviarBtn"
-                                            data-toggle="modal" data-target="#ModalEnviar">Enviar para cozinha</button>
+                                            data-toggle="modal" data-target="#ModalEnviar" onClick={function(){
+
+                                                set_id_pedido(pedido.id_pedido)
+                                            }}>Enviar para cozinha</button>
                                     </div>
                                 </div>
                                 <br />
@@ -203,7 +206,7 @@ function MeusPedidos() {
 
 
                 <ModalConfirmacao mensagem='Excluir o produto do pedido ?' funcao={deletarDetalhe} parametro={[id_detalhe, id_pedido]} mensagem_btn='Excluir' />
-                <ModalConfirmacao mensagem='Enviar pedido para cozinha ?' funcao={enviar_cozinha} parametro={[]} mensagem_btn='Enviar' idModal={"ModalEnviar"} idBtnModal={"ModalEnviarBtn"} data_target={"#ModalEnviar"} />
+                <ModalConfirmacao mensagem='Enviar pedido para cozinha ?' funcao={enviar_cozinha} parametro={[id_pedido]} mensagem_btn='Enviar' idModal={"ModalEnviar"} idBtnModal={"ModalEnviarBtn"} data_target={"#ModalEnviar"} />
             </div>
         </>
     )

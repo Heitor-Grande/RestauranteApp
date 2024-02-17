@@ -132,6 +132,7 @@ function DetalhesMesa() {
 
                     toast.success(resposta.data.message)
                     document.querySelector("#ModallimparMesaBtn").click()
+                    carregarTotalMesa()
                 }
                 else {
 
