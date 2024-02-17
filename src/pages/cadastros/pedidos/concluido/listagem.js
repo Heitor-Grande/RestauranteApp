@@ -13,7 +13,7 @@ function ListagemPedidosConcluido() {
     const [pedidos, set_pedidos] = useState([])
     function carregarPedidoS() {
         set_carregando(false)
-        axios.get(`${process.env.REACT_APP_API}/all/pedidos/pendentes/${localStorage.getItem("tokenCasa")}/CONCLUIDO`)
+        axios.get(`${process.env.REACT_APP_API}/all/pedidos/pendentes/${localStorage.getItem("tokenCasa")}/CONCLUIDO/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo == 200) {

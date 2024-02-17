@@ -15,7 +15,7 @@ function ListagemProdutos() {
     function carregarProdutosDaCategoria() {
 
         set_carregando(false)
-        axios.get(`${process.env.REACT_APP_API}/carrega/produtos/by/categoria/${sessionStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa")}/${params.categoria}`)
+        axios.get(`${process.env.REACT_APP_API}/carrega/produtos/by/categoria/${sessionStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa")}/${params.categoria}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {

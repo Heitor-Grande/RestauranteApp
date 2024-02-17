@@ -37,7 +37,7 @@ function FormularioProduto() {
         }
 
 
-        axios.post(`${process.env.REACT_APP_API}/criar/produto/${localStorage.getItem("tokenCasa")}`, dados).then(function (resposta) {
+        axios.post(`${process.env.REACT_APP_API}/criar/produto/${localStorage.getItem("tokenCasa")}/${sessionStorage.getItem("id_cliente")}`, dados).then(function (resposta) {
 
             if (resposta.data.codigo != 200) {
                 set_carregando(true)
@@ -71,7 +71,7 @@ function FormularioProduto() {
         }
 
 
-        axios.put(`${process.env.REACT_APP_API}/editar/produto/${localStorage.getItem("tokenCasa")}`, dados).then(function (resposta) {
+        axios.put(`${process.env.REACT_APP_API}/editar/produto/${localStorage.getItem("tokenCasa")}/${sessionStorage.getItem("id_cliente")}`, dados).then(function (resposta) {
 
             if (resposta.data.codigo != 200) {
 
@@ -101,7 +101,7 @@ function FormularioProduto() {
 
         set_carregando(false)
 
-        axios.get(`${process.env.REACT_APP_API}/all/categorias/${localStorage.getItem("tokenCasa")}`)
+        axios.get(`${process.env.REACT_APP_API}/all/categorias/${localStorage.getItem("tokenCasa")}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
@@ -126,7 +126,7 @@ function FormularioProduto() {
 
         set_carregando(false)
 
-        axios.get(`${process.env.REACT_APP_API}/produtoid/produtos/${localStorage.getItem("tokenCasa")}/${id_prod}`)
+        axios.get(`${process.env.REACT_APP_API}/produtoid/produtos/${localStorage.getItem("tokenCasa")}/${id_prod}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {

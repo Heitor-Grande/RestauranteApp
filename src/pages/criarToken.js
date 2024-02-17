@@ -10,7 +10,7 @@ function CriarToken() {
     const params = useParams()
 
     function BuscarToken() {
-        axios.get(`${process.env.REACT_APP_API}/criar/jwt`).then(function (respostaToken) {
+        axios.get(`${process.env.REACT_APP_API}/criar/jwt/${params.token_acesso}`).then(function (respostaToken) {
 
             if (respostaToken.data.codigo == 400) {
                 toast.error(respostaToken.data.message)
@@ -28,7 +28,7 @@ function CriarToken() {
 
     function validarMesa(respostaToken) {
 
-        axios.get(`${process.env.REACT_APP_API}/validar/mesa/${params.id_mesa}`).then(function (resposta) {
+        axios.get(`${process.env.REACT_APP_API}/validar/mesa/${params.id_mesa}/${sessionStorage.getItem("id_cliente")}`).then(function (resposta) {
 
             if (resposta.data.codigo == 400) {
                 toast.error(resposta.data.message)
@@ -37,6 +37,7 @@ function CriarToken() {
 
                 sessionStorage.setItem("tokenCliente", respostaToken.data.token)
                 sessionStorage.setItem("id_mesa", params.id_mesa)
+                sessionStorage.setItem("token_acesso", params.token_acesso)
                 navigate("/comanda/mesa")
             }
         }).catch(function (erro) {

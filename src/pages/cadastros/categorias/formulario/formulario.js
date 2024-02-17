@@ -24,7 +24,7 @@ function FormularioCategoria(params) {
             ativo: ativo
         }
 
-        axios.post(`${process.env.REACT_APP_API}/criar/categoria/${localStorage.getItem("tokenCasa")}`, dados).then(function (resposta) {
+        axios.post(`${process.env.REACT_APP_API}/criar/categoria/${localStorage.getItem("tokenCasa")}/${sessionStorage.getItem("id_cliente")}`, dados).then(function (resposta) {
 
             if (resposta.data.codigo != 200) {
 
@@ -47,9 +47,9 @@ function FormularioCategoria(params) {
 
         set_carregando(false)
 
-        axios.get(`${process.env.REACT_APP_API}/categoriaid/categorias/${localStorage.getItem("tokenCasa")}/${params.id_categoria}`)
+        axios.get(`${process.env.REACT_APP_API}/categoriaid/categorias/${localStorage.getItem("tokenCasa")}/${params.id_categoria}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
-
+                console.log(resposta.data)
                 if (resposta.data.codigo != 200) {
                     set_carregando(true)
                     toast.error(resposta.data.message)
@@ -76,7 +76,7 @@ function FormularioCategoria(params) {
 
         set_carregando(false)
 
-        axios.put(`${process.env.REACT_APP_API}/editar/categoria/${localStorage.getItem("tokenCasa")}`, dados).then(function (resposta) {
+        axios.put(`${process.env.REACT_APP_API}/editar/categoria/${localStorage.getItem("tokenCasa")}/${sessionStorage.getItem("id_cliente")}`, dados).then(function (resposta) {
 
             if (resposta.data.codigo != 200) {
 

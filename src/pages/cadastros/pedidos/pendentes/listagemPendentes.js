@@ -15,7 +15,7 @@ function ListagemPendentes() {
     const [pedidos, set_pedidos] = useState([])
     function carregarPedidoS() {
         set_carregando(false)
-        axios.get(`${process.env.REACT_APP_API}/all/pedidos/pendentes/${localStorage.getItem("tokenCasa")}/PENDENTE`)
+        axios.get(`${process.env.REACT_APP_API}/all/pedidos/pendentes/${localStorage.getItem("tokenCasa")}/PENDENTE/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo == 200) {

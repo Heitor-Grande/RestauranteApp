@@ -17,7 +17,7 @@ function VisualizarPedidoPendente() {
     const [detalhes, set_detalhes] = useState([])
     function carregarPedidoDetalhe(id_pedido) {
 
-        axios.get(`${process.env.REACT_APP_API}/carregar/detalhes/${id_pedido}/${localStorage.getItem("tokenCasa")}`)
+        axios.get(`${process.env.REACT_APP_API}/carregar/detalhes/${id_pedido}/${localStorage.getItem("tokenCasa")}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
@@ -37,7 +37,7 @@ function VisualizarPedidoPendente() {
 
     function updatePedido(id_pedido, status) {
 
-        axios.put(`${process.env.REACT_APP_API}/att/pedidos/stt/${localStorage.getItem("tokenCasa")}/${status}/${id_pedido}`)
+        axios.put(`${process.env.REACT_APP_API}/att/pedidos/stt/${localStorage.getItem("tokenCasa")}/${status}/${id_pedido}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {

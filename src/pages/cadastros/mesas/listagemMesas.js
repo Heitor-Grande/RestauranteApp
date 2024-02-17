@@ -9,28 +9,31 @@ function ListagemMesas() {
 
     const [mesas, set_mesas] = useState([])
     function criarMesa() {
-
-        axios.post(`${process.env.REACT_APP_API}/criar/mesa/${localStorage.getItem("tokenCasa")}`)
+        set_carregando(false)
+        axios.post(`${process.env.REACT_APP_API}/criar/mesa/${localStorage.getItem("tokenCasa")}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo == 200) {
 
+                    set_carregando(false)
                     toast.success(resposta.data.message)
                     carregarMesas()
                 }
                 else {
 
+                    set_carregando(false)
                     toast.error(resposta.data.message)
                 }
             }).catch(function (erro) {
 
+                set_carregando(false)
                 toast.error(erro)
             })
     }
 
     function carregarMesas() {
 
-        axios.get(`${process.env.REACT_APP_API}/selecionar/mesas/${localStorage.getItem("tokenCasa")}`)
+        axios.get(`${process.env.REACT_APP_API}/selecionar/mesas/${localStorage.getItem("tokenCasa")}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
@@ -54,7 +57,7 @@ function ListagemMesas() {
 
         Promise.all(mesas.map(async function (mesa) {
 
-            return await qrcode.toDataURL(`${process.env.REACT_APP_LINKQR}/${mesa.id_mesa}`)
+            return await qrcode.toDataURL(`${process.env.REACT_APP_LINKQR}/${mesa.id_mesa}/${sessionStorage.getItem("token_acesso")}`)
                 .catch(function (erro) {
 
                     set_hidden(false)

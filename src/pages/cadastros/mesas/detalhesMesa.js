@@ -13,7 +13,7 @@ function DetalhesMesa() {
 
     function chamarGarcom() {
 
-        axios.put(`${process.env.REACT_APP_API}/chamado/false/${localStorage.getItem("tokenCasa")}/${params.id_mesa}`)
+        axios.put(`${process.env.REACT_APP_API}/chamado/false/${localStorage.getItem("tokenCasa")}/${params.id_mesa}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo == 200) {
@@ -36,7 +36,7 @@ function DetalhesMesa() {
     function carregarMesas() {
 
         set_carregando(false)
-        axios.get(`${process.env.REACT_APP_API}/selecionar/mesa/${localStorage.getItem("tokenCasa")}/${params.id_mesa}`)
+        axios.get(`${process.env.REACT_APP_API}/selecionar/mesa/${localStorage.getItem("tokenCasa")}/${params.id_mesa}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
@@ -63,7 +63,7 @@ function DetalhesMesa() {
             status: status
         }
 
-        axios.put(`${process.env.REACT_APP_API}/alterar/status/${localStorage.getItem("tokenCasa")}/${params.id_mesa}`, dados)
+        axios.put(`${process.env.REACT_APP_API}/alterar/status/${localStorage.getItem("tokenCasa")}/${params.id_mesa}/${sessionStorage.getItem("id_cliente")}`, dados)
             .then(function (resposta) {
 
                 if (resposta.data.codigo == 200) {
@@ -84,7 +84,7 @@ function DetalhesMesa() {
 
     function carregarPedidosMesa() {
 
-        axios.get(`${process.env.REACT_APP_API}/carregar/mesa/pedidosConcluidos/${localStorage.getItem("tokenCasa")}/${params.id_mesa}`)
+        axios.get(`${process.env.REACT_APP_API}/carregar/mesa/pedidosConcluidos/${localStorage.getItem("tokenCasa")}/${params.id_mesa}${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo == 200) {
@@ -104,7 +104,7 @@ function DetalhesMesa() {
     const [historico, set_historico] = useState([])
     function carregarHistoricoMesa() {
 
-        axios.get(`${process.env.REACT_APP_API}/load/mesa/pedidos/${localStorage.getItem("tokenCasa")}/${params.id_mesa}`)
+        axios.get(`${process.env.REACT_APP_API}/load/mesa/pedidos/${localStorage.getItem("tokenCasa")}/${params.id_mesa}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo == 200) {
@@ -123,7 +123,7 @@ function DetalhesMesa() {
 
     function LimparMesa() {
 
-        axios.put(`${process.env.REACT_APP_API}/limpa/mesa/${params.id_mesa}/${localStorage.getItem("tokenCasa")}`)
+        axios.put(`${process.env.REACT_APP_API}/limpa/mesa/${params.id_mesa}/${localStorage.getItem("tokenCasa")}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo == 200) {
@@ -145,7 +145,7 @@ function DetalhesMesa() {
     function carregarTotalMesa() {
 
         set_carregando(false)
-        axios.get(`${process.env.REACT_APP_API}/total/${params.id_mesa}/${localStorage.getItem("tokenCasa")}`)
+        axios.get(`${process.env.REACT_APP_API}/total/${params.id_mesa}/${localStorage.getItem("tokenCasa")}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo == 200) {
@@ -170,19 +170,20 @@ function DetalhesMesa() {
     function gerarQrdCode() {
 
         set_hidden(true)
-        qrcode.toDataURL(`${process.env.REACT_APP_LINKQR}/${params.id_mesa}`).then(function (qrcode64) {
-            set_qr(qrcode64)
+        qrcode.toDataURL(`${process.env.REACT_APP_LINKQR}/${params.id_mesa}/${sessionStorage.getItem("token_acesso")}`)
+            .then(function (qrcode64) {
+                set_qr(qrcode64)
 
-            document.querySelector("#leftBar").style = 'display: none'
-            setTimeout(() => {
-                window.print()
-                document.querySelector("#leftBar").style = 'display: block'
-            }, 1000)
-        }).catch(function (erro) {
+                document.querySelector("#leftBar").style = 'display: none'
+                setTimeout(() => {
+                    window.print()
+                    document.querySelector("#leftBar").style = 'display: block'
+                }, 1000)
+            }).catch(function (erro) {
 
-            set_hidden(false)
-            toast.error(erro)
-        })
+                set_hidden(false)
+                toast.error(erro)
+            })
     }
 
     const [carregando, set_carregando] = useState(true)
@@ -229,7 +230,7 @@ function DetalhesMesa() {
                         />
                     </div>
 
-                    <p>Total da mesa: {totalMesa != "" && totalMesa != null ? totalMesa.toString().replace(".", ",") : "00,00" }</p>
+                    <p>Total da mesa: {totalMesa != "" && totalMesa != null ? totalMesa.toString().replace(".", ",") : "00,00"}</p>
 
 
                     <button type="button" className="btn btn-link d-block m-auto" onClick={function () {

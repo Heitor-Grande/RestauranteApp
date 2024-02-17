@@ -17,7 +17,7 @@ function ListagemDeProdutos() {
     function ListarprodutosAll() {
 
         set_carregando(false)
-        axios.get(`${process.env.REACT_APP_API}/all/produtos/${localStorage.getItem("tokenCasa")}`)
+        axios.get(`${process.env.REACT_APP_API}/all/produtos/${localStorage.getItem("tokenCasa")}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
@@ -44,7 +44,7 @@ function ListagemDeProdutos() {
 
         set_carregando(false)
 
-        axios.delete(`${process.env.REACT_APP_API}/del/produto/${localStorage.getItem("tokenCasa")}/${idDeletar}`)
+        axios.delete(`${process.env.REACT_APP_API}/del/produto/${localStorage.getItem("tokenCasa")}/${idDeletar}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {

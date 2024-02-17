@@ -6,13 +6,12 @@ import { toast } from "react-toastify"
 function LeftBar() {
 
     const navigate = useNavigate()
-    const params = useParams()
 
     const [Permissao, setPermissao] = useState("")
 
     function ValidarJWT() {
 
-        axios.get(`${process.env.REACT_APP_API}/validar/token/${sessionStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa") || "123"}`)
+        axios.get(`${process.env.REACT_APP_API}/validar/token/${sessionStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa")}/${sessionStorage.getItem("token_acesso")}`)
             .then(function (resposta) {
                 if (resposta.data.codigo != 200) {
 
@@ -20,8 +19,9 @@ function LeftBar() {
                     navigate("/ler/novamente/qr/code")
                 }
                 else if (resposta.data.codigo == 200) {
-
-                    setPermissao(resposta.data.infoToken)
+                    
+                    setPermissao(resposta.data.infoToken.token_validado)
+                    sessionStorage.setItem("id_cliente", resposta.data.infoToken.id_cliente)
                     carregarCategorias()
                 }
             }).catch(function (erro) {
@@ -34,7 +34,7 @@ function LeftBar() {
     const [categorias, set_categorias] = useState([])
     function carregarCategorias() {
 
-        axios.get(`${process.env.REACT_APP_API}/all/categorias/ativas/${sessionStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa")}`)
+        axios.get(`${process.env.REACT_APP_API}/all/categorias/ativas/${sessionStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa")}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
@@ -73,7 +73,7 @@ function LeftBar() {
 
 
                         {Permissao == "newLoginCasa" ? "" : <li className="w-100" hidden={Permissao == "newLoginCasa" ? true : false}>
-                            
+
                             <a href="#submenu0" data-bs-toggle="collapse" className="nav-link px-0 align-middle">
                                 <i className="bi bi-journal-bookmark-fill text-white"></i>
                                 <span className="ms-1 d-none d-sm-inline text-white">Comanda</span>

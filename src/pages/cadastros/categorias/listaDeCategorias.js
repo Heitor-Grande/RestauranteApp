@@ -18,7 +18,7 @@ function ListaDeCategorias() {
 
         set_carregando(false)
 
-        axios.get(`${process.env.REACT_APP_API}/all/categorias/${localStorage.getItem("tokenCasa")}`)
+        axios.get(`${process.env.REACT_APP_API}/all/categorias/${localStorage.getItem("tokenCasa")}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
@@ -41,7 +41,7 @@ function ListaDeCategorias() {
     function deletarCategoria() {
 
         set_carregando(false)
-        axios.delete(`${process.env.REACT_APP_API}/del/categoria/${localStorage.getItem("tokenCasa")}/${idDeletar}`)
+        axios.delete(`${process.env.REACT_APP_API}/del/categoria/${localStorage.getItem("tokenCasa")}/${idDeletar}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
