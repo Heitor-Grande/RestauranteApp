@@ -33,6 +33,7 @@ function DetalhesMesa() {
 
     const [status, setStatus] = useState(false)
     const [chamado, setChamado] = useState(true)
+    const [num_mesa, set_num_mesa] = useState("")
     function carregarMesas() {
 
         set_carregando(false)
@@ -49,6 +50,7 @@ function DetalhesMesa() {
                     set_carregando(true)
                     setStatus(resposta.data.mesa[0].status)
                     setChamado(resposta.data.mesa[0].chamado)
+                    set_num_mesa(resposta.data.mesa[0].num_mesa)
                 }
             }).catch(function (erro) {
 
@@ -213,7 +215,7 @@ function DetalhesMesa() {
 
                     <div className="text-center">
                         <i className="bi bi-table fs-4"></i>
-                        <span className="d-block">Mesa {params.id_mesa}</span>
+                        <span className="d-block">Mesa {num_mesa}</span>
                     </div>
                     <hr />
 

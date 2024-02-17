@@ -58,7 +58,7 @@ function App() {
                 <Route path="meus/pedidos/:id_mesa" element={<MeusPedidos />} />
               </Route>
 
-              <Route path="entrar/criar/token/cliente/:id_mesa/:token_acesso" element={<CriarToken />} />
+              <Route path="entrar/criar/token/cliente/:num_mesa/:token_acesso" element={<CriarToken />} />
               <Route path="entrar/criar/token/casa/:token_acesso" element={<CriarTokenCasa />} />
               <Route path="ler/novamente/qr/code" element={<TokenInvalido />} />
 

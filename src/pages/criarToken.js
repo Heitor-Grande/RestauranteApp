@@ -17,6 +17,7 @@ function CriarToken() {
             }
             else {
 
+                sessionStorage.setItem("id_cliente", respostaToken.data.token.id_cliente)
                 validarMesa(respostaToken)
             }
         }).catch(function (erro) {
@@ -28,15 +29,15 @@ function CriarToken() {
 
     function validarMesa(respostaToken) {
 
-        axios.get(`${process.env.REACT_APP_API}/validar/mesa/${params.id_mesa}/${sessionStorage.getItem("id_cliente")}`).then(function (resposta) {
+        axios.get(`${process.env.REACT_APP_API}/validar/mesa/${params.num_mesa}/${sessionStorage.getItem("id_cliente")}`).then(function (resposta) {
 
             if (resposta.data.codigo == 400) {
                 toast.error(resposta.data.message)
             }
             else {
 
-                sessionStorage.setItem("tokenCliente", respostaToken.data.token)
-                sessionStorage.setItem("id_mesa", params.id_mesa)
+                sessionStorage.setItem("tokenCliente", respostaToken.data.token.token)
+                sessionStorage.setItem("id_mesa", resposta.data.mesa[0].id_mesa)
                 sessionStorage.setItem("token_acesso", params.token_acesso)
                 navigate("/comanda/mesa")
             }

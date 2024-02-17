@@ -15,37 +15,41 @@ function ListagemMesas() {
 
                 if (resposta.data.codigo == 200) {
 
-                    set_carregando(false)
+                    set_carregando(true)
                     toast.success(resposta.data.message)
                     carregarMesas()
                 }
                 else {
 
-                    set_carregando(false)
+                    set_carregando(true)
                     toast.error(resposta.data.message)
                 }
             }).catch(function (erro) {
 
-                set_carregando(false)
+                set_carregando(true)
                 toast.error(erro)
             })
     }
 
     function carregarMesas() {
 
+        set_carregando(false)
         axios.get(`${process.env.REACT_APP_API}/selecionar/mesas/${localStorage.getItem("tokenCasa")}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
 
+                    set_carregando(true)
                     toast.error(resposta.data.message)
                 }
                 else {
 
+                    set_carregando(true)
                     set_mesas(resposta.data.mesas)
                 }
             }).catch(function (erro) {
 
+                set_carregando(true)
                 toast.error(erro)
             })
     }
@@ -57,7 +61,7 @@ function ListagemMesas() {
 
         Promise.all(mesas.map(async function (mesa) {
 
-            return await qrcode.toDataURL(`${process.env.REACT_APP_LINKQR}/${mesa.id_mesa}/${sessionStorage.getItem("token_acesso")}`)
+            return await qrcode.toDataURL(`${process.env.REACT_APP_LINKQR}/${mesa.num_mesa}/${sessionStorage.getItem("token_acesso")}`)
                 .catch(function (erro) {
 
                     set_hidden(false)
@@ -113,7 +117,7 @@ function ListagemMesas() {
                                         }}>
 
                                             <i className="bi bi-table fs-4 text-white d-block"></i>
-                                            <span className="text-white">{mesa.id_mesa}</span>
+                                            <span className="text-white">{mesa.num_mesa}</span>
                                         </div>
                                     </>
                                 )
@@ -130,7 +134,7 @@ function ListagemMesas() {
                         return (
                             <div key={index}>
                                 <img src={qr} alt="" className="d-block m-auto" />
-                                <p>Mesa {mesa.id_mesa}</p>
+                                <p>Mesa {mesa.num_mesa}</p>
                             </div>
                         )
                     })}
