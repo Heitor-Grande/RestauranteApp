@@ -115,12 +115,12 @@ function VisualizarPedidoPendente() {
                     </div>
 
                     <br />
-                    <button disabled={params.status == "CONCLUIDO"  || params.status == "CANCELADO" || params.status == "MONTANDO" ? true : false} className="btn btn-secondary m-auto d-block" onClick={function () {
+                    <button  disabled={params.status == "CONCLUIDO"  || params.status == "CANCELADO" || params.status == "MONTANDO" ? true : false} className="btn btn-secondary m-auto d-block" onClick={function () {
 
                         set_statusAtualizar(params.status == "PENDENTE" ? "PROCESSANDO" : params.status == "PROCESSANDO" ? "CONCLUIDO" : "")
                         document.querySelector("#ModalConfirmacaoBtn").click()
                     }}>
-                        {params.status == "PENDENTE" ? "PROCESSAR" : params.status == "PROCESSANDO" ? "CONCLUIR" : params.status == "MONTANDO" ? "MONTANDO" : "CANCELADO"}</button>
+                        {params.status == "PENDENTE" ? "PROCESSAR" : params.status == "PROCESSANDO" ? "CONCLUIR" : params.status == "MONTANDO" ? "MONTANDO" : params.status == "CONCLUIDO" ? "CONCLUIDO" : "CANCELADO"}</button>
                 </form>
 
             </div>

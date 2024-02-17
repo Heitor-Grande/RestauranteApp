@@ -86,7 +86,7 @@ function DetalhesMesa() {
 
     function carregarPedidosMesa() {
 
-        axios.get(`${process.env.REACT_APP_API}/carregar/mesa/pedidosConcluidos/${localStorage.getItem("tokenCasa")}/${params.id_mesa}${sessionStorage.getItem("id_cliente")}`)
+        axios.get(`${process.env.REACT_APP_API}/carregar/mesa/pedidosConcluidos/${localStorage.getItem("tokenCasa")}/${params.id_mesa}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo == 200) {

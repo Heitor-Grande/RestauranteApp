@@ -11,7 +11,7 @@ function MeusPedidos() {
     function carregarPedidosDaMesa() {
 
         set_carregando(false)
-        axios.get(`${process.env.REACT_APP_API}/carregar/pedidos/${sessionStorage.getItem("id_mesa")}/${sessionStorage.getItem("tokenCliente")}`)
+        axios.get(`${process.env.REACT_APP_API}/carregar/pedidos/${sessionStorage.getItem("id_mesa")}/${sessionStorage.getItem("tokenCliente")}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
@@ -35,7 +35,7 @@ function MeusPedidos() {
     const [detalhes, set_detalhes] = useState([])
     function carregarPedidoDetalhe(id_pedido) {
 
-        axios.get(`${process.env.REACT_APP_API}/carregar/detalhes/${id_pedido}/${sessionStorage.getItem("tokenCliente")}`)
+        axios.get(`${process.env.REACT_APP_API}/carregar/detalhes/${id_pedido}/${sessionStorage.getItem("tokenCliente")}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
@@ -58,7 +58,7 @@ function MeusPedidos() {
 
     function deletarDetalhe(id_detalhe, id_pedido) {
 
-        axios.get(`${process.env.REACT_APP_API}/deleta/detalhe/${id_detalhe}/${sessionStorage.getItem("tokenCliente")}`)
+        axios.get(`${process.env.REACT_APP_API}/deleta/detalhe/${id_detalhe}/${sessionStorage.getItem("tokenCliente")}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
@@ -85,7 +85,7 @@ function MeusPedidos() {
 
     function enviar_cozinha(id_pedido) {
 
-        axios.put(`${process.env.REACT_APP_API}/atualizar/status/${id_pedido}/${sessionStorage.getItem("tokenCliente")}/${sessionStorage.getItem("id_mesa")}`)
+        axios.put(`${process.env.REACT_APP_API}/atualizar/status/${id_pedido}/${sessionStorage.getItem("tokenCliente")}/${sessionStorage.getItem("id_mesa")}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo == 200) {

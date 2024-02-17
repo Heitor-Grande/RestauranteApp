@@ -150,7 +150,7 @@ function ListagemPedidosProcessando() {
 
 
                                     <div className="col border-bottom">{pedido.id_pedido}</div>
-                                    <div className="col border-bottom">{pedido.mesa}</div>
+                                    <div className="col border-bottom">{pedido.num_mesa}</div>
                                     <div className="col border-bottom">
 
                                         {/*<i className="bi bi-trash" onClick={function () {

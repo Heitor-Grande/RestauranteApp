@@ -13,7 +13,7 @@ function Mesa() {
     function carregarTotalMesa() {
 
         set_carregando(false)
-        axios.get(`${process.env.REACT_APP_API}/total/${sessionStorage.getItem("id_mesa")}/${sessionStorage.getItem("tokenCliente")}`)
+        axios.get(`${process.env.REACT_APP_API}/total/${sessionStorage.getItem("id_mesa")}/${sessionStorage.getItem("tokenCliente")}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo == 200) {
@@ -35,7 +35,7 @@ function Mesa() {
 
     function chamarGarcom() {
 
-        axios.put(`${process.env.REACT_APP_API}/chamado/true/${sessionStorage.getItem("tokenCliente")}/${sessionStorage.getItem("id_mesa")}`)
+        axios.put(`${process.env.REACT_APP_API}/chamado/true/${sessionStorage.getItem("tokenCliente")}/${sessionStorage.getItem("id_mesa")}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo == 200) {

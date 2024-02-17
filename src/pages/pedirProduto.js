@@ -23,7 +23,7 @@ function PedirProduto() {
 
         set_carregando(false)
 
-        axios.get(`${process.env.REACT_APP_API}/produtoid/produtos/${sessionStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa")}/${params.id_produto}`)
+        axios.get(`${process.env.REACT_APP_API}/produtoid/produtos/${sessionStorage.getItem("tokenCliente") || localStorage.getItem("tokenCasa")}/${params.id_produto}/${sessionStorage.getItem("id_cliente")}`)
             .then(function (resposta) {
 
                 if (resposta.data.codigo != 200) {
@@ -66,7 +66,7 @@ function PedirProduto() {
         }
         else {
 
-            axios.post(`${process.env.REACT_APP_API}/criar/pedido/${sessionStorage.getItem("id_mesa")}/${sessionStorage.getItem("tokenCliente")}/${params.id_produto}`, dados)
+            axios.post(`${process.env.REACT_APP_API}/criar/pedido/${sessionStorage.getItem("id_mesa")}/${sessionStorage.getItem("tokenCliente")}/${params.id_produto}/${sessionStorage.getItem("id_cliente")}`, dados)
                 .then(function (resposta) {
 
                     if (resposta.data.codigo == 200) {
