@@ -173,7 +173,7 @@ function DetalhesMesa() {
     function gerarQrdCode() {
 
         set_hidden(true)
-        qrcode.toDataURL(`${process.env.REACT_APP_LINKQR}/${params.id_mesa}/${sessionStorage.getItem("token_acesso")}`)
+        qrcode.toDataURL(`${process.env.REACT_APP_LINKQR}/${num_mesa}/${sessionStorage.getItem("token_acesso")}`)
             .then(function (qrcode64) {
                 set_qr(qrcode64)
 
@@ -317,7 +317,7 @@ function DetalhesMesa() {
                 <div className="pt-2 pb-2 imgQrcode text-center" hidden={qr == "" ? true : false}>
 
                     <img src={qr} alt="" className="d-block m-auto" />
-                    <p>Mesa {params.id_mesa}</p>
+                    <p>Mesa {num_mesa}</p>
                 </div>
             </div>
 
