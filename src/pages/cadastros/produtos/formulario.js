@@ -237,7 +237,7 @@ function FormularioProduto() {
 
                                                 set_id_categoria(e.target.value)
                                             }}>
-                                            <option className="text-secondary" value="" disabled>Categoria</option>
+                                            <option className="text-secondary" value="">Categoria</option>
                                             {listaCategorias.map(function (categoria) {
 
                                                 return (
