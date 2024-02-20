@@ -144,7 +144,7 @@ function ListagemProdutos() {
                                         }}>
 
                                             <div className="card-body text-center">
-                                                {produto.img != "" && produto.img != null ? <img src={produto.img} className="d-inline-block h-50 w-75" /> : "" }
+                                                {produto.img != "" && produto.img != null ? <img src={produto.img} className="d-inline-block img-fluid" style={{ maxHeight: '120px', width: 'auto' }} /> : "" }
                                                 
 
                                                 <hr />
