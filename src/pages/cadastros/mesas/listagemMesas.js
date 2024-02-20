@@ -85,8 +85,14 @@ function ListagemMesas() {
     const [carregando, set_carregando] = useState(true)
 
     useEffect(function () {
-        carregarMesas()
+
+        set_carregando(false)
+        setTimeout(function () {
+            carregarMesas()
+        }, 1000)
     }, [])
+
+
 
     return (
         <>
