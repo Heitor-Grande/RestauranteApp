@@ -93,6 +93,10 @@ function ListagemMesas() {
         set_carregando(false)
         setTimeout(function () {
             carregarMesas()
+
+            setInterval(function () {
+                carregarMesas()
+            }, 60000)
         }, 1000)
     }, [])
 
@@ -104,7 +108,7 @@ function ListagemMesas() {
                 <div hidden={hidden}>
 
                     <div className="d-flex">
-                        <button className="btn btn-secondary d-block me-1" onClick={function(){
+                        <button className="btn btn-secondary d-block me-1" onClick={function () {
 
                             document.querySelector("#btnModalCriar").click()
                         }}>Mesa <i className="bi bi-plus-circle"></i></button>
@@ -154,7 +158,7 @@ function ListagemMesas() {
                 </div>
 
             </div>
-            <ModalConfirmacao mensagem={"Criar nova mesa ?"} mensagem_btn={"Criar"} funcao={criarMesa} parametro={""} idBtnModal={"btnModalCriar"} data_target={"#modalConfirmar"} idModal={"modalConfirmar"}/>
+            <ModalConfirmacao mensagem={"Criar nova mesa ?"} mensagem_btn={"Criar"} funcao={criarMesa} parametro={""} idBtnModal={"btnModalCriar"} data_target={"#modalConfirmar"} idModal={"modalConfirmar"} />
         </>
     )
 }
