@@ -3,6 +3,7 @@ import axios from 'axios'
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import qrcode from "qrcode"
+import ModalConfirmacao from "../../../components/modalConfirmacao";
 
 function ListagemMesas() {
     const navigate = useNavigate()
@@ -18,16 +19,19 @@ function ListagemMesas() {
                     set_carregando(true)
                     toast.success(resposta.data.message)
                     carregarMesas()
+                    document.querySelector("#btnModalCriar").click()
                 }
                 else {
 
                     set_carregando(true)
                     toast.error(resposta.data.message)
+                    document.querySelector("#btnModalCriar").click()
                 }
             }).catch(function (erro) {
 
                 set_carregando(true)
                 toast.error(erro)
+                document.querySelector("#btnModalCriar").click()
             })
     }
 
@@ -100,7 +104,10 @@ function ListagemMesas() {
                 <div hidden={hidden}>
 
                     <div className="d-flex">
-                        <button className="btn btn-secondary d-block me-1" onClick={criarMesa}>Mesa <i className="bi bi-plus-circle"></i></button>
+                        <button className="btn btn-secondary d-block me-1" onClick={function(){
+
+                            document.querySelector("#btnModalCriar").click()
+                        }}>Mesa <i className="bi bi-plus-circle"></i></button>
                         <button className="btn btn-warning d-block" onClick={gerarQrdCodes}>QRcodes <i className="bi bi-printer"></i></button>
                         <small className="p-1">v1.0.0</small>
                     </div>
@@ -118,7 +125,7 @@ function ListagemMesas() {
 
                                 return (
                                     <>
-                                        <div className={mesa.status == true && mesa.chamado == false ? "col border text-center bg-success" : mesa.status == false && mesa.chamado == false ? "col border text-center bg-danger" : "col border text-center bg-primary"} onClick={function () {
+                                        <div className={mesa.qtdnao_pronto > 0 ? "col border text-center bg-warning" : mesa.status == true && mesa.chamado == false ? "col border text-center bg-success" : mesa.status == false && mesa.chamado == false ? "col border text-center bg-danger" : "col border text-center bg-primary"} onClick={function () {
                                             navigate(`/visualizar/detalhes/mesa/${mesa.id_mesa}`)
                                         }}>
 
@@ -147,6 +154,7 @@ function ListagemMesas() {
                 </div>
 
             </div>
+            <ModalConfirmacao mensagem={"Criar nova mesa ?"} mensagem_btn={"Criar"} funcao={criarMesa} parametro={""} idBtnModal={"btnModalCriar"} data_target={"#modalConfirmar"} idModal={"modalConfirmar"}/>
         </>
     )
 }

@@ -290,7 +290,7 @@ function DetalhesMesa() {
                                                 return (
                                                     <>
                                                         <div className="w-100"></div>
-                                                        <div className="col border-bottom">{pedido.id_pedido}</div>
+                                                        <div className={pedido.status == "CONCLUIDO" ? "col border-bottom" : "col border-bottom bg-warning"}>{pedido.id_pedido}</div>
                                                         <div className="col border-bottom">{pedido.sum.toString().replace(".", ",")}</div>
                                                         <div className="col border-bottom overflow-auto text-nowrap">{pedido.cliente}</div>
                                                         <div className="col border-bottom">
