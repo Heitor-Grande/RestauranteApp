@@ -99,6 +99,11 @@ function FormularioCategoria(params) {
 
         if (params.id_categoria != "novo") {
             selectCategoriaPorID()
+
+            if(params.id_categoria == 1){
+
+                navigate(-1)
+            }
         }
     }, [])
 

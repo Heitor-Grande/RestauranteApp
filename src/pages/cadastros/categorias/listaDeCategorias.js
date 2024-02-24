@@ -179,18 +179,27 @@ function ListaDeCategorias() {
                                     <div className="w-100"></div>
 
                                     <div className="col border-bottom">{categoria.categoria}</div>
-                                    <div className={categoria.ativo == true ? "col-1 border-bottom bg-success text-center p-0" : "col-1 border-bottom bg-danger text-center p-0"}>{categoria.ativo == true ? "" : ""}</div>
-                                    <div className="col-3 border-bottom">
 
-                                        <i className="bi bi-trash" onClick={function () {
-                                            setIdDeletar(categoria.id_categoria)
-                                            setShow(true)
-                                        }}></i>
+                                    {categoria.id_categoria != 1 ?
 
-                                        <i className="bi bi-pencil-square" onClick={function () {
-                                            navigate(`/formulario/categoria/editar/${categoria.id_categoria}`)
-                                        }}></i>
-                                    </div>
+                                        <>
+
+                                            <div className={categoria.ativo == true ? "col-1 border-bottom bg-success text-center p-0" : "col-1 border-bottom bg-danger text-center p-0"}>{categoria.ativo == true ? "" : ""}</div>
+                                            <div className="col-3 border-bottom">
+
+                                                <i className="bi bi-trash disabled" onClick={function () {
+                                                    setIdDeletar(categoria.id_categoria)
+                                                    setShow(true)
+                                                }}></i>
+
+                                                <i className="bi bi-pencil-square" onClick={function () {
+                                                    navigate(`/formulario/categoria/editar/${categoria.id_categoria}`)
+                                                }}></i>
+                                            </div>
+                                        </>
+
+
+                                        : ""}
                                 </>
                             )
                         })}
